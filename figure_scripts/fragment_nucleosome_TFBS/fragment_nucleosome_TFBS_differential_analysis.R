@@ -5,10 +5,10 @@ library(scales)
 library(ggrepel)
 
 ### Set paths
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/fragment_nucleosome_TFBS"
+outdir <- ""
 
-data <- read.delim(file.path(outdir, "fragment_nucleosome_TFBS_differential.txt"))
-data_samples <- read.delim("/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/samples/sample_list.txt")
+data <- read.delim("data/griffin/fragment_nucleosome_TFBS_differential.txt")
+data_samples <- read.delim("sample_list.txt")
 
 ### Seperate out features
 data$site <- gsub("_.*","", data$feature)
