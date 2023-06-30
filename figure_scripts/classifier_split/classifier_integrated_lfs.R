@@ -7,7 +7,7 @@ library(data.table)
 ### Set variables
 source("figure_scripts/classifier_split/FuncClassifier.R")
 class <- "figure_scripts/classifier_split/classifier.R"
-path <- "data/classifier_split"
+path <- "data/classifier"
 outdir <- ""
 
 ### Read in sample data
