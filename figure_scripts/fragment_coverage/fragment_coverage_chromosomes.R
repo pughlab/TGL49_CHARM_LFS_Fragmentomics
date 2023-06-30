@@ -4,16 +4,16 @@ library(psych)
 library(ComplexHeatmap)
 
 ### Set variables
-path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS"
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/fragment_coverage"
-healthy <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC"
+path <- "data/fragment_ratio"
+outdir <- ""
+healthy <- "hbc/fragment_ratio"
 
 
 ### Import data (Starting with the 5Mb ratios)
-de_table <- read.delim(file.path(outdir, "fragment_coverage_differential.txt"))
-data_normal <- read.delim(file.path(healthy, "fragmentomics", "TGL49_HBC_frags_100kb.txt"))
-data_cov <- read.delim(file.path(path, "fragmentomics", "CHARM_LFS_frags_100kb.txt"))
-samples <- read.delim("/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/CHARM_Project/LFS/samples/sample_list.txt")
+de_table <- read.delim(file.path(path, "fragment_coverage_differential.txt"))
+data_normal <- read.delim(file.path(healthy, "TGL49_HBC_frags_100kb.txt"))
+data_cov <- read.delim(file.path(path, "CHARM_LFS_frags_100kb.txt"))
+samples <- read.delim("sample_list.txt")
 
 ### Format healthy controls and calculate median
 row.names(data_normal) <- with(data_normal, paste0(seqnames, "_", start))
