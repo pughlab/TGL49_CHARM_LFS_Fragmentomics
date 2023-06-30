@@ -5,18 +5,18 @@ library(pROC)
 library(data.table)
 
 ### Set variables
-source("/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier/FuncClassifier.R")
-class <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier/classifier.R"
-path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/dinucleotide"
-healthy_path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/dinucleotide"
-butler_path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/HBC_Butler/dinucleotide"
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier"
+source("figure_scripts/classifier/FuncClassifier.R")
+class <- "figure_scripts/classifier/classifier.R"
+path <- "data/dinucleotide"
+healthy_path <- "hbc/dinucleotide"
+butler_path <- "butler/dinucleotide"
+outdir <- ""
 
 ### Import data (Starting with the 5Mb dinucs)
 data_dinuc <- read.delim(list.files(path, "genome_dinucleotide.txt", full.names = TRUE))
 normal_dinuc <- read.delim(list.files(healthy_path, "genome_dinucleotide.txt", full.names = TRUE))
 butler_dinuc <- read.delim(list.files(butler_path, "genome_dinucleotide.txt", full.names = TRUE))
-data_samples <- read.delim("/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/samples/sample_list.txt")
+data_samples <- read.delim("sample_list.txt")
 
 ### Remove failed data_samples
 exclude <- c("TGL49_0025_Cf_U_PE_321_WG", "TGL49_0035_Cf_U_PE_310_WG", "TGL49_0041_Cf_U_PE_317_WG", "TGL49_0209_Cf_U_PE_373_WG")
