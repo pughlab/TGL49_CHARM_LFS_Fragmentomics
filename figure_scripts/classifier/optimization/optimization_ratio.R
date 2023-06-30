@@ -4,16 +4,16 @@ library(tidyverse)
 library(pROC)
 
 ### Set variables
-path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS"
-healthy <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC"
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier/optimization"
+path <- "data/fragment_ratio"
+healthy <- "hbc/fragment_ratio"
+outdir <- ""
 title <- "ratio"
 title2 <- "Fragment Ratio"
 
 ### Import data (Starting with the 5Mb ratios)
-data_samples <- read.delim(file.path(path, "samples/sample_list.txt"))
-data <- read.delim(file.path(path, "fragmentomics", "CHARM_LFS_ratio_5Mb.txt"))
-normal <- read.delim(file.path(healthy, "fragmentomics", "TGL49_HBC_ratio_5Mb.txt"))
+data_samples <- read.delim("sample_list.txt"))
+data <- read.delim(file.path(path, "CHARM_LFS_ratio_5Mb.txt"))
+normal <- read.delim(file.path(healthy, "TGL49_HBC_ratio_5Mb.txt"))
 
 ### Remove failed samples
 exclude <- c("TGL49_0025_Cf_U_PE_321_WG", "TGL49_0035_Cf_U_PE_310_WG", "TGL49_0041_Cf_U_PE_317_WG", "TGL49_0209_Cf_U_PE_373_WG")
@@ -33,4 +33,4 @@ normal <- normal[, !(colnames(normal) %in% c("seqnames", "arm", "start", "end"))
 normal <- as.data.frame(t(normal))
 
 ### Run classifiers
-source("/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier/optimization/runner.R")
+source("figure_scripts/classifier/optimization/runner.R")
