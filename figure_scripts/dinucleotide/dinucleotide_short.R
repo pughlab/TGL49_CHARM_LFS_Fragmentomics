@@ -9,9 +9,9 @@ library(ggh4x)
 library(zplyr)
 
 ### Set paths
-path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/dinucleotide"
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/dinucleotide"
-healthy_path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/dinucleotide"
+path <- "data/dinucleotide"
+outdir <- ""
+healthy_path <- "hbc/dinucleotide"
 
 ### Find paths
 data <- list.files(path, "dinucleotide.txt", full.names = TRUE)
@@ -22,7 +22,7 @@ data_normal <- data_normal[grepl("short", data_normal)]
 ### Import data 
 data <- read.delim(data)
 data_normal <- read.delim(data_normal)
-data_samples <- read.delim("/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/samples/sample_list.txt")
+data_samples <- read.delim("sample_list.txt")
 
 ### Remove failed and unknown samples and format 
 exclude <- c("TGL49_0025_Cf_U_PE_321_WG", "TGL49_0035_Cf_U_PE_310_WG", "TGL49_0041_Cf_U_PE_317_WG", "TGL49_0209_Cf_U_PE_373_WG")
