@@ -3,12 +3,12 @@ library(matrixStats)
 library(ComplexHeatmap)
 
 ### Set paths
-path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/griffin/TCGA"
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/fragment_nucleosome_TCGA"
-healthy_path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/griffin/TCGA"
+path <- "data/griffin/TCGA"
+outdir <- ""
+healthy_path <- "hbc/griffin/TCGA"
 
 data_griffin <- list.files(path, "features", full.names = TRUE)
-data_samples <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/samples/sample_list.txt"
+data_samples <- "sample_list.txt"
 data_normal <- list.files(healthy_path, "features", full.names = TRUE)
 
 ### Import data 
@@ -17,12 +17,6 @@ data_griffin <- do.call(rbind, datalist)
 datalist <- lapply(data_normal, function(x){read.delim(file = x)})
 data_normal <- do.call(rbind, datalist)
 data_samples <- read.delim(data_samples)
-
-### Read in coverages and exclude <1x samples
-coverage <- "/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/CHARM_Project/LFS/GATK_coverage/CHARM_LFS_coverage_summary.txt"
-coverage <- read.delim(coverage)
-coverage <- coverage[coverage$coverage_swgs >= 1,]
-coverage <- coverage[!(is.na(coverage$coverage_swgs)), ]
 
 ### Remove failed and unknown samples and format 
 exclude <- c("TGL49_0025_Cf_U_PE_321_WG", "TGL49_0035_Cf_U_PE_310_WG", "TGL49_0041_Cf_U_PE_317_WG", "TGL49_0209_Cf_U_PE_373_WG")
