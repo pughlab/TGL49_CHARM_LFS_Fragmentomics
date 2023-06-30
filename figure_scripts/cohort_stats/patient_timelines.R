@@ -2,12 +2,12 @@ library(tidyverse)
 library(ggpubr)
 
 ### Set variables
-path <- "/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/CHARM_Project/LFS"
-outdir <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/cohort_stats"
+path <- ""
+outdir <- ""
 
-data <- read.delim(file.path(path, "samples/patient_timelines.txt"))
+data <- read.delim("data/patient_timelines.txt")
 
-samples <- read.delim(file.path(path, "samples/sample_list.txt"))
+samples <- read.delim(file.path(path, "sample_list.txt"))
 exclude <- c("TGL49_0025_Cf_U_PE_321_WG", "TGL49_0035_Cf_U_PE_310_WG", "TGL49_0041_Cf_U_PE_317_WG", "TGL49_0209_Cf_U_PE_373_WG")
 samples <- samples[!(samples$sWGS %in% exclude), ]
 samples <- samples[!(samples$notes == "NS"), ]
