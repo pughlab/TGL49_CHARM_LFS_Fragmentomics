@@ -7,7 +7,7 @@ library(ComplexHeatmap)
 library(lemon)
 
 ### Set variables
-path <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier"
+path <- "data/classifier"
 
 ### Find files
 filenames <- list.files(path, ".rds", full.names = TRUE)
@@ -15,10 +15,10 @@ filenames <- filenames[grepl("integrated_lfs.rds", filenames)]
 
 ### Read in file
 data <- readRDS(filenames)
-samples <- read.delim("/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/CHARM_Project/LFS/samples/sample_list.txt")
+samples <- read.delim("sample_list.txt")
 samples <- samples[!(samples$notes == "NS"), ]
 
-ichor <- read.delim("/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/CHARM_Project/LFS/ichorCNA/CHARM_LFS_ichorCNA_summary_reviewed.txt")
+ichor <- read.delim("data/CHARM_LFS_ichorCNA_summary_reviewed.txt")
 hbc_scores <- read.delim(file.path(path, "longitudinal_hbc_scores.txt"))
 
 ### Unlist files
