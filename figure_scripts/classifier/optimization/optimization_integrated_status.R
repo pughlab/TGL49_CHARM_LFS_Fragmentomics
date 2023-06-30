@@ -5,8 +5,8 @@ library(pROC)
 library(multiROC)
 
 ### Set variables
-path <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier"
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier/optimization"
+path <- "data/classifier"
+outdir <- ""
 
 ### List classifiers
 class_list <- list.files(path, "status.rds", full.names = TRUE)
@@ -70,7 +70,7 @@ for (k in c(1:length(classifiers))){
   
   ### Run suite of classifiers
   set.seed(123)
-  source("/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier/optimization/classifier_opt.R")
+  source("figure_scripts/classifier/optimization/classifier_opt.R")
   
   ### Get Kappa performance
   mean <- mean(kappa)
