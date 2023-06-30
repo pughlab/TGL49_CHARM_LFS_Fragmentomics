@@ -4,16 +4,16 @@ library(tidyverse)
 library(pROC)
 
 ### Set variables
-path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/griffin_all/TFBS"
-healthy_path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/griffin_all/TFBS"
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier/optimization"
+path <- "data/griffin/TFBS"
+healthy_path <- "hbc/griffin/TFBS"
+outdir <- ""
 title <- "TFBS"
 title2 <- "Nuc (TFBS)"
 
 ### Import data 
 data <- list.files(path, "features", full.names = TRUE)
 normal <- list.files(healthy_path, "features", full.names = TRUE)
-data_samples <- read.delim("/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/samples/sample_list.txt")
+data_samples <- read.delim("sample_list.txt")
 
 datalist <- lapply(data, function(x){read.delim(file = x)})
 data <- do.call(rbind, datalist)
@@ -38,4 +38,4 @@ normal <- normal[, -1]
 normal <- as.data.frame(t(normal))
 
 ### Run classifiers
-source("/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier/optimization/runner.R")
+source("figure_scripts/classifier/optimization/runner.R")
