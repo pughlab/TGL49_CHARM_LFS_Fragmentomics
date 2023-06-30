@@ -5,9 +5,9 @@ library(htmlwidgets)
 library(ComplexHeatmap)
 
 ### Set variables
-path <- "/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/CHARM_Project/LFS"
+path <- ""
 
-data_samples <- read.delim(file.path(path, "samples/sample_list.txt"))
+data_samples <- read.delim("sample_list.txt"))
 exclude <- c("TGL49_0025_Cf_U_PE_321_WG", "TGL49_0035_Cf_U_PE_310_WG", "TGL49_0041_Cf_U_PE_317_WG", "TGL49_0209_Cf_U_PE_373_WG")
 data_samples <- data_samples[!(data_samples$sWGS %in% exclude), ]
 data_samples <- data_samples[!(data_samples$notes == "NS"), ]
