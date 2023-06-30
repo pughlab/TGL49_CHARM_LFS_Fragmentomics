@@ -5,9 +5,9 @@ library(pROC)
 library(data.table)
 
 ### Set variables
-source("/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier/FuncClassifier.R")
-class <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier/classifier.R"
-path <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier"
+source("figure_scripts/classifier/FuncClassifier.R")
+class <- "figure_scripts/classifier/classifier.R"
+path <- "data/classifier"
 
 ### List classifiers
 class_list <- list.files(path, "status", full.names = TRUE)
