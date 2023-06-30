@@ -6,18 +6,19 @@ library(ggh4x)
 library(zplyr)
 library(patchwork)
 library(ggpubr)
+library(chisq.posthoc.test)
 
 ### Set paths
 path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/end_motifs"
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/end_motif"
+outdir <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/end_motif"
 healthy_path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/end_motifs"
 
 ### Find paths
 data <- list.files(path, "motifs.txt", full.names = TRUE)
 data_lo <- data[grepl("DNASE1L3", data)]
-data <- data[grepl("genome", data)]
+data <- data[grepl("genome2", data)]
 data_normal <- list.files(healthy_path, "motifs.txt", full.names = TRUE)
-data_normal <- data_normal[grepl("genome", data_normal)]
+data_normal <- data_normal[grepl("genome2", data_normal)]
 
 ### Import data 
 data <- read.delim(data)
@@ -201,6 +202,42 @@ data_reg <- rbind(data.frame(var1 = fold_neg,
                              comp = "LFS-PC vs\nLFS-AC"))
 data_reg$comp <- factor(data_reg$comp, levels = c("LFS-H vs\nLFS-PC", "LFS-H vs\nLFS-AC", "LFS-PC vs\nLFS-AC"))
 
+### Compare frequencies based on expected frequencies (shannon)
+median_hbc <- data.frame(motif = data_normal$motif,
+                         median = median_hbc)
+expected_freq <- 1/256
+median_hbc$expected <- ifelse(median_hbc$median > expected_freq, "Above", "Below")
+
+data_expected_freq <- merge(median_hbc, fold_change, by = "motif")
+data_expected_freq$change <- ifelse(data_expected_freq$fold_neg > 1, "Increase", "Decrease")
+
+stat_shannon <- as.data.frame(table(data_expected_freq$expected, data_expected_freq$change))
+
+chisq_shannon <- chisq.test(data_expected_freq$expected, data_expected_freq$change)$p.value
+post_hoc <- as.data.frame(table(data_expected_freq$expected, data_expected_freq$change))
+chisq_shannon_decrease <- chisq.test(post_hoc$Freq[post_hoc$Var2 == "Decrease"])$p.value
+chisq_shannon_increase <- chisq.test(post_hoc$Freq[post_hoc$Var2 == "Increase"])$p.value
+
+my_chars <- strsplit(data_expected_freq$motif, "")
+char_frequency <- lapply(my_chars, function(x) {table(x)})
+char_frequency <- do.call(bind_rows, char_frequency)
+char_frequency <- as.data.frame(char_frequency)
+char_frequency[is.na(char_frequency)] <- 0
+data_expected_freq$AT <- char_frequency$A + char_frequency$T
+
+data_expected_freq$expected <- as.factor(data_expected_freq$expected)
+data_expected_freq$change <- as.factor(data_expected_freq$change)
+data_expected_freq$AT <- as.factor(data_expected_freq$AT)
+
+stat_shannon2 <- as.data.frame(table(data_expected_freq$expected, data_expected_freq$change, data_expected_freq$AT))
+input <- data_expected_freq[data_expected_freq$expected == "Above", ]
+input <- table(input$change, input$AT)
+chisq_above <- chisq.test(input)$p.value
+
+input <- data_expected_freq[data_expected_freq$expected == "Below", ]
+input <- table(input$change, input$AT)
+chisq_below <- chisq.test(input)$p.value
+
 ### Set theme
 theme <- theme(plot.title = element_text(hjust = 0.5, size = 13), 
                axis.line = element_line(colour = "black"),
@@ -218,33 +255,33 @@ theme <- theme(plot.title = element_text(hjust = 0.5, size = 13),
                axis.title = element_text(size = 13))
 
 ### Plot comparisons
-data_stats_dnase$max <- c(rep(0.88, 4),
-                          rep(1.15, 4),
-                          rep(0.78, 4),
-                          rep(1.55, 4),
-                          rep(1.00, 4),
+data_stats_dnase$max <- c(rep(1.13, 4),
+                          rep(1.6, 4),
+                          rep(0.85, 4),
+                          rep(1.6, 4),
+                          rep(1.05, 4),
                           rep(1.30, 4))
 fig <- ggplot(data_dnase) +
-  geom_boxplot(aes(diag, value, fill = diag), alpha = 0.5) +
+  geom_boxplot(aes(diag, value, fill = diag), outlier.size = 1, alpha = 0.5) +
   geom_text(data = data_stats_dnase, aes(diag, max, label = annot), size = 5) +
   xlab("Frequency (%)") + 
   ylab("Frequency (%)") +
   labs(color = "", fill = "") +
   scale_fill_manual(name = " ", values =c("black", "#1F78B4", "#33A02C", "#E31A1C")) +
   facet_wrap(.~motif, scales = "free_y", nrow = 1) +
-  facetted_pos_scales(y = list(scale_y_continuous(limits = c(0.55, 0.9)),
-                               scale_y_continuous(limits = c(0.55, 1.2)),
-                               scale_y_continuous(limits = c(0.55, 0.8)),
-                               scale_y_continuous(limits = c(0.75, 01.60)),
-                               scale_y_continuous(limits = c(0.70, 1)),
-                               scale_y_continuous(limits = c(0.75, 1.25)))) +
+  facetted_pos_scales(y = list(scale_y_continuous(limits = c(0.5, 1.15)),
+                               scale_y_continuous(limits = c(0.8, 1.6)),
+                               scale_y_continuous(limits = c(0.65, 0.95)),
+                               scale_y_continuous(limits = c(0.7, 1.55)),
+                               scale_y_continuous(limits = c(0.65, 1.1)),
+                               scale_y_continuous(limits = c(0.85, 1.4)))) +
   ggtitle(paste0("DNASE1L3 motifs")) + 
   theme +
   theme(axis.text.x = element_blank(),
         axis.ticks.x = element_blank())
 fig
 
-ggsave(file.path(outdir, paste0("fragment_end_contexts_dnase1l3.pdf")), fig, width = 8, height = 3.5)
+ggsave(file.path(outdir, paste0("fragment_end_contexts_dnase1l3.pdf")), fig, width = 8, height = 4)
 
 ### Plot fold changes
 fig_fold <- ggplot(fold_change) +
@@ -269,7 +306,8 @@ fig_motif <- ggplot(data_motif) +
   ylab("Position") +
   labs(fill = "") +
   theme +
-  theme(legend.position = c(0.25, 2),
+  theme(legend.position = c(0.15, 1.75),
+        legend.background = element_blank(),
         axis.text.x = element_blank(),
         axis.ticks.x = element_blank(),
         plot.margin = unit(c(-1,0.5,0.5,0.5), "lines")) +
@@ -284,7 +322,7 @@ ggsave(file.path(outdir, "fragment_end_contexts_change.pdf"), figure, width = 6.
 fig_reg <- ggplot(data_reg, aes(var1, var2)) +
   geom_point(aes(color = comp), pch = 16, alpha = 0.5) +
   stat_regline_equation(label.y = 1, aes(label = ..rr.label..)) +
-  facet_grid(~comp~.) +
+  facet_grid(.~comp) +
   xlab("Fold Change (Var1)") + 
   ylab("Fold Change (Var2)") +
   labs(color = "", fill = "") +
@@ -294,7 +332,7 @@ fig_reg <- ggplot(data_reg, aes(var1, var2)) +
   theme(legend.position = "none",
         axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))
 fig_reg
-ggsave(file.path(outdir, "fragment_end_contexts_change_reg.pdf"), fig_reg, width = 2.5, height = 5)
+ggsave(file.path(outdir, "fragment_end_contexts_change_reg.pdf"), fig_reg, width = 6, height = 3)
 
 ### Plot fold changes (LFS)
 fig_fold2 <- ggplot(data_freq) +
@@ -321,7 +359,8 @@ fig_motif2 <- ggplot(data_motif2, aes(bin, variable, fill = value)) +
   ylab("Position") +
   labs(fill = "") +
   theme +
-  theme(legend.position = c(0.75, 1.8),
+  theme(legend.position = c(0.65, 1.8),
+        legend.background = element_blank(),
         axis.text.x = element_blank(),
         axis.ticks.x = element_blank(),
         strip.background = element_blank(),
@@ -332,4 +371,46 @@ fig_motif2
 
 figure <- fig_fold2/fig_motif2 + plot_layout(heights = c(2,1))
 figure
-ggsave(file.path(outdir, "fragment_end_contexts_change_lfs.pdf"), figure, width = 5.5, height = 5)
+ggsave(file.path(outdir, "fragment_end_contexts_change_lfs.pdf"), figure, width = 6.25, height = 4.25)
+
+### Shannon plots
+theme <- theme(plot.title = element_text(hjust = 0.5, size = 13), 
+               axis.line = element_line(colour = "black"),
+               panel.grid.major = element_blank(),
+               panel.grid.minor = element_blank(),
+               panel.border = element_blank(),
+               panel.background = element_blank(),
+               legend.position = "bottom",
+               legend.key = element_rect(fill = "white"),
+               legend.title = element_text(size = 12),
+               legend.text = element_text(size = 12),
+               strip.background = element_blank(),
+               strip.text = element_text(size = 13),
+               axis.text = element_text(size = 13),
+               axis.title = element_text(size = 13))
+
+plot_shan <- ggplot(stat_shannon) +
+  geom_bar(aes(Var2, Freq, fill = Var2), color = NA, stat = "identity") +
+  facet_grid(.~Var1, scales = "free_x", space = "free_x") +
+  xlab("Change vs TP53 Wildtype") + 
+  ylab("# of Motifs") +
+  ggtitle("Expected Motif Frequecy") + 
+  scale_fill_manual(name = " ", values = c("#5B84B1FF", "#FC766AFF")) +
+  theme +
+  theme(legend.position = "none",
+        axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))
+plot_shan
+ggsave(file.path(outdir, "fragment_end_shannon_expected.pdf"), plot_shan, width = 3, height = 4)
+
+plot_shan2 <- ggplot(stat_shannon2) +
+  geom_bar(aes(Var3, Freq, fill = Var2), color = NA, stat = "identity") +
+  facet_grid(Var2~Var1, scales = "free_x", space = "free_x") +
+  xlab("# of A/T Nucleotides") + 
+  ylab("# of Motifs") +
+  ggtitle("Expected Motif Frequecy") + 
+  scale_fill_manual(name = " ", values = c("#5B84B1FF", "#FC766AFF")) +
+  theme +
+  theme(legend.position = "none",
+        legend.background = element_blank())
+plot_shan2
+ggsave(file.path(outdir, "fragment_end_shannon_AT.pdf"), plot_shan2, width = 4, height = 4)

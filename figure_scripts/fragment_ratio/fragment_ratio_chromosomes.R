@@ -6,12 +6,19 @@ library(circlize)
 
 ### Set variables
 path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS"
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/fragment_ratio"
+outdir <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/fragment_ratio"
 healthy <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC"
 
 ### Import data (Starting with the 5Mb ratios)
 de_table <- read.delim(file.path(outdir, "fragment_ratio_differential.txt"))
 data_normal <- read.delim(file.path(healthy, "fragmentomics", "TGL49_HBC_ratio_5Mb.txt"))
+
+### Calculate # and stats
+de_up <- de_table[de_table$padj_cohort < 0.05 & de_table$cohort > 0, ]
+de_up_median <- median((abs(de_up$healthy_median) + (de_up$healthy_sd*de_up$cohort))/abs(de_up$healthy_median))
+
+de_down <- de_table[de_table$padj_cohort < 0.05 & de_table$cohort < 0, ]
+de_down_median <- median((abs(de_down$healthy_median) + (de_down$healthy_sd*de_down$cohort))/abs(de_down$healthy_median))
 
 ### Format healthy controls and calculate a mean distance from median
 row.names(data_normal) <- with(data_normal, paste0(seqnames, "_", start))
@@ -107,6 +114,50 @@ ann_text <- de_sum_melt %>%
   dplyr::summarise(count = unique(count))
 ann_text$type <- "Missense 2"
 ann_text$type <- factor(ann_text$type, levels = c("Cohort", "Missense 3", "Splice", "Missense 2", "LOF"))
+
+### Perform Chi-squared tests
+data_chi <- de_sum_melt
+data_chi$pos <- data_chi$count*data_chi$pos
+data_chi$neg <- -data_chi$count*data_chi$neg
+data_chi$none <- data_chi$count - data_chi$pos - data_chi$neg
+data_chi <- data_chi[data_chi$type == "Cohort", ]
+data_chi <- data_chi[!(data_chi$pos == 0 & data_chi$neg == 0), ]
+
+stats_chi_chr <- data.frame()
+for (i in data_chi$chr) {
+    x <- data_chi[data_chi$chr == i, c("pos", "neg", "none")]
+    x <- colSums(x)
+    y <- data_chi[!(data_chi$chr == i), c("pos", "neg", "none")]
+    y <- colSums(y)
+    z <- data.frame(a = x,
+                    b = y)
+    p <- c(i, chisq.test(z)$p.value)
+    stats_chi_chr <- rbind(stats_chi_chr, p)
+}
+
+data_chi <- de_sum_melt
+data_chi$pos <- data_chi$count*data_chi$pos
+data_chi$neg <- -data_chi$count*data_chi$neg
+data_chi$none <- data_chi$count - data_chi$pos - data_chi$neg
+data_chi <- data_chi %>%
+  group_by(type) %>%
+  dplyr::summarise(up = sum(pos),
+                   down = sum(neg))
+data_chi$none <- 512 - data_chi$up - data_chi$down
+names <- data_chi$type
+data_chi <- as.data.frame(t(data_chi[, 2:4]))
+colnames(data_chi) <- names
+
+stats_chi_class <- c()
+for (i in names) {
+  x <- data_chi[, colnames(data_chi) == i]
+  y <- data_chi[, colnames(data_chi) == "Cohort"]
+  z <- cbind(x, y)
+  p <- chisq.test(z)$p.value
+  stats_chi_class <- c(stats_chi_class, p)
+}
+stats_chi_class <- data.frame(class = names,
+                              pvalue = stats_chi_class)
 
 ### Plot correlation table
 pdf(file.path(outdir, "fragment_genome_correlation_table.pdf"), height = 3, width = 3)

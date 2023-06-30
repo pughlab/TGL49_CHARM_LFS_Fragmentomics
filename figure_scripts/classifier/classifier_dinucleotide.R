@@ -9,11 +9,13 @@ source("/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classi
 class <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier/classifier.R"
 path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/dinucleotide"
 healthy_path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/dinucleotide"
+butler_path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/HBC_Butler/dinucleotide"
 outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier"
 
 ### Import data (Starting with the 5Mb dinucs)
 data_dinuc <- read.delim(list.files(path, "genome_dinucleotide.txt", full.names = TRUE))
 normal_dinuc <- read.delim(list.files(healthy_path, "genome_dinucleotide.txt", full.names = TRUE))
+butler_dinuc <- read.delim(list.files(butler_path, "genome_dinucleotide.txt", full.names = TRUE))
 data_samples <- read.delim("/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/samples/sample_list.txt")
 
 ### Remove failed data_samples
@@ -63,10 +65,30 @@ normal_dinuc_gc <- normal_dinuc_gc[, colnames(normal_dinuc_gc) %like% "X"]
 
 normal_dinuc_contexts <- bind_cols(normal_dinuc_at, normal_dinuc_gc)
 
+### (Butler)
+butler_dinuc$context <- ifelse(butler_dinuc$context %in% c("AA", "AT", "TA", "TT"), "at",
+                               ifelse(butler_dinuc$context %in% c("CC", "CG", "GC", "GG"), "gc", NA))
+butler_dinuc <- butler_dinuc[complete.cases(butler_dinuc), ]
+butler_dinuc_contexts <- aggregate(.~context+sample, butler_dinuc, sum)
+
+butler_dinuc_at <- butler_dinuc_contexts[butler_dinuc_contexts$context == "at",]
+row.names(butler_dinuc_at) <- butler_dinuc_at$sample
+colnames(butler_dinuc_at) <- paste0(colnames(butler_dinuc_at), "_AT")
+butler_dinuc_at <- butler_dinuc_at[, colnames(butler_dinuc_at) %like% "X"]
+
+butler_dinuc_gc <- butler_dinuc_contexts[butler_dinuc_contexts$context == "gc",]
+row.names(butler_dinuc_gc) <- butler_dinuc_gc$sample
+colnames(butler_dinuc_gc) <- paste0(colnames(butler_dinuc_gc), "_GC")
+butler_dinuc_gc <- butler_dinuc_gc[, colnames(butler_dinuc_gc) %like% "X"]
+
+butler_dinuc_contexts <- bind_cols(butler_dinuc_at, butler_dinuc_gc)
+
 ### Make Healthy vs LFS Negative
 Data <- data_contexts[row.names(data_contexts) %in% samples_neg$sWGS, ]
 Data <- bind_rows(Data, normal_dinuc_contexts)
 Data$sample <- row.names(Data)
+
+Data_butler <- butler_dinuc_contexts[complete.cases(butler_dinuc_contexts), ]
 
 y <- c(rep("positive", sum(row.names(Data) %in% samples_neg$sWGS)))
 y <- c(y, rep("negative", sum(!(row.names(Data) %in% samples_neg$sWGS))))
@@ -75,7 +97,9 @@ y <- factor(y, levels = c("negative", "positive"))
 algorithm <- "rf"
 source(class)
 outcomes_neg <- All.kFold
+outcomes_neg_but <- But.kfold
 saveRDS(outcomes_neg, file.path(outdir, "outcomes_dinucleotide_status.rds"))
+saveRDS(outcomes_neg_but, file.path(outdir, "outcomes_dinucleotide_status_butler.rds"))
 
 ### Make LFS positive vs negative
 Data <- data_contexts[row.names(data_contexts) %in% data_samples$sWGS, ]
@@ -87,4 +111,7 @@ y <- factor(y, levels = c("negative", "positive"))
 algorithm <- "glm"
 source(class)
 outcomes_lfs <- All.kFold
+outcomes_lfs_but <- But.kfold
 saveRDS(outcomes_lfs, file.path(outdir, "outcomes_dinucleotide_lfs.rds"))
+saveRDS(outcomes_lfs_but, file.path(outdir, "outcomes_dinucleotide_lfs_butler.rds"))
+

@@ -7,7 +7,7 @@ library(grid)
 path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS"
 outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/fragment_ratio"
 healthy <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC"
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/fragment_ratio"
+outdir <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/fragment_ratio"
 
 ### Import data (Starting with the 5Mb ratios)
 data_ratio <- read.delim(file.path(path, "fragmentomics", "CHARM_LFS_ratio_5Mb.txt"))
@@ -84,7 +84,7 @@ mytheme <- theme_classic(base_size=12) + theme(
   axis.title.x = element_text(size=10),
   axis.title.y = element_text(size=10),
   axis.text.y = element_text(size=8),
-  plot.title = element_text(size=0),
+  plot.title = element_text(size=14),
   legend.position = "none",
   legend.title = element_text(size=10),
   legend.text = element_text(size=10),
@@ -118,9 +118,9 @@ arm.labels[names(small.arms)] <- small.arms
 # Generate Fragmentation plots
 #Mutation Type
 g1 <- ggplot() + 
-  geom_line(data = data_melt, aes(x = bin, y = value, group = variable), size = 0.5, alpha = 0.25) + 
+  geom_line(data = data_melt, aes(x = bin, y = value, group = variable), linewidth = 0.5, alpha = 0.25) + 
   ggtitle("Fragmentation Profiles") +
-  labs(x="Chromosome", y="Fragmentation profile\n", color="") + 
+  labs(x="Chromosome", y="Normalized Fragment Ratio", color="") + 
   facet_grid(mutation_type ~ arm, switch = "x",space = "free_x", scales = "free_x", labeller = labeller(arm = arm.labels)) + 
   coord_cartesian(xlim = NULL, ylim=c(-.08,.08), expand = TRUE) + 
   mytheme
@@ -130,23 +130,23 @@ ggsave(file.path(outdir, "fragment_genome_profiles_type.pdf"), g1, width = 12, h
 
 #LFS vs HBC
 g2 <- ggplot() + 
-  geom_line(data = data_melt, aes(x = bin, y = value, group = variable), size = 0.25, alpha = 0.25) + 
+  geom_line(data = data_melt, aes(x = bin, y = value, group = variable), linewidth = 0.25, alpha = 0.25) + 
   ggtitle("Fragmentation Profiles") +
-  labs(x="Chromosome", y="Fragmentation profile", color="") + 
+  labs(x="Chromosome", y="Normalized Fragment Ratio", color="") + 
   facet_grid(diag ~ arm, switch = "x",space = "free_x", scales = "free_x", labeller = labeller(arm = arm.labels)) + 
   coord_cartesian(xlim = NULL, ylim=c(-.08,.08), expand = TRUE) + 
   mytheme
 g2
 
-ggsave(file.path(outdir, "fragment_genome_profiles_status.pdf"), g2, width = 12, height = 5)
+ggsave(file.path(outdir, "fragment_genome_profiles_status.pdf"), g2, width = 12, height = 4)
 
 #Medians
 g3 <- ggplot() + 
-  geom_line(data = hbc_median, aes(x = bin, y = median), color = "black", size = 0.5, alpha = 0.75) +
+  geom_line(data = hbc_median, aes(x = bin, y = median), color = "black", linewidth = 0.5, alpha = 0.75) +
   geom_ribbon(data = hbc_median, aes(x = bin, ymin = median - sd, ymax = median + sd), fill = "black", alpha = 0.25) +
-  geom_line(data = median_melt, aes(x = bin, y = value), color = "red", size = 0.5, alpha = 0.5) + 
+  geom_line(data = median_melt, aes(x = bin, y = value), color = "red", linewidth = 0.5, alpha = 0.5) + 
   ggtitle("Fragmentation Profiles") +
-  labs(x="Chromosome", y="Fragmentation profile", color="") + 
+  labs(x="Chromosome", y="Normalized Fragment Ratio", color="") + 
   guides(color = guide_legend(nrow = 1)) +
   facet_grid(variable ~ arm, switch = "x",space = "free_x", scales = "free_x", labeller = labeller(arm = arm.labels)) + 
   coord_cartesian(xlim = NULL, ylim=c(-.05,.05), expand = TRUE) + 

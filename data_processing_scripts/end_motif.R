@@ -2,7 +2,7 @@ library(tidyverse)
 library(dplyr)
 
 ### Set working variables
-path <- file.path("/Users/derekwong/Desktop/H4H/projects/CHARM/LFS/end_motifs/output")
+path <- file.path("/Users/derekwong/Desktop/H4H/hereditary/projects/CHARM/LFS/end_motifs/output")
 outdir <- "/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/CHARM_Project/LFS/end_motifs"
 project <- "CHARM_LFS"
 

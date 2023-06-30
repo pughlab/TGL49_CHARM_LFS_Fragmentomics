@@ -9,15 +9,15 @@ library(ggpubr)
 
 ### Set paths
 path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/end_motifs"
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/end_motif"
+outdir <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/end_motif"
 healthy_path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/end_motifs"
 
 ### Find paths
 data <- list.files(path, "motifs.txt", full.names = TRUE)
 data_lo <- data[grepl("DNASE1L3", data)]
-data <- data[grepl("genome", data)]
+data <- data[grepl("genome2", data)]
 data_normal <- list.files(healthy_path, "motifs.txt", full.names = TRUE)
-data_normal <- data_normal[grepl("genome", data_normal)]
+data_normal <- data_normal[grepl("genome2", data_normal)]
 
 ### Import data 
 data <- read.delim(data)
@@ -190,7 +190,7 @@ fig_motif
 
 figure <- fig_fold/fig_motif + plot_layout(heights = c(2,1))
 figure
-ggsave(file.path(outdir, "fragment_end_contexts_dnase1l3_change_hom.pdf"), figure, width = 5.75, height = 5)
+ggsave(file.path(outdir, "fragment_end_contexts_dnase1l3_change_hom.pdf"), figure, width = 7.5, height = 5)
 
 ### Plot fold changes (het)
 fig_fold <- ggplot(data_melt_het) +
@@ -231,4 +231,33 @@ fig_motif
 
 figure <- fig_fold/fig_motif + plot_layout(heights = c(2,1))
 figure
-ggsave(file.path(outdir, "fragment_end_contexts_dnase1l3_change_het.pdf"), figure, width = 5.75, height = 5)
+ggsave(file.path(outdir, "fragment_end_contexts_dnase1l3_change_het.pdf"), figure, width = 7.5, height = 5)
+
+### Plot regressions
+data_cast_dna <- reshape2::dcast(data_melt_dna, motif ~ variable)
+fig_reg1 <- ggplot(data_cast_dna) +
+  geom_point(aes(`TP53 +/-`, `DNASE1L3 -/-`), pch = 16, alpha = 0.5) +
+  geom_hline(yintercept = 0, linetype = "dashed", linewidth = 0.5) +
+  geom_vline(xintercept = 0, linetype = "dashed", linewidth = 0.5) +
+  stat_regline_equation(label.y = -0.5, aes(`TP53 +/-`, `DNASE1L3 -/-`, label = ..rr.label..)) +
+  xlab("TP53 (+/-) vs HBC") + 
+  ylab("DNASE1L3 (-/-) vs HBC") +
+  ggtitle("Homozygous") + 
+  theme
+fig_reg1
+
+data_cast_het <- reshape2::dcast(data_melt_het, motif ~ variable)
+fig_reg2 <- ggplot(data_cast_het) +
+  geom_point(aes(`TP53 +/-`, `DNASE1L3 +/-`), pch = 16, alpha = 0.5) +
+  geom_hline(yintercept = 0, linetype = "dashed", linewidth = 0.5) +
+  geom_vline(xintercept = 0, linetype = "dashed", linewidth = 0.5) +
+  stat_regline_equation(label.y = -0.2, aes(`TP53 +/-`, `DNASE1L3 +/-`, label = ..rr.label..)) +
+  xlab("TP53 (+/-) vs HBC") + 
+  ylab("DNASE1L3 (+/-) vs HBC") +
+  ggtitle("Heterozygous") + 
+  theme
+fig_reg2
+
+figure <- ggarrange(fig_reg1, fig_reg2)
+figure
+ggsave(file.path(outdir, "fragment_end_contexts_dnase1l3_reg.pdf"), figure, width = 8, height = 4)

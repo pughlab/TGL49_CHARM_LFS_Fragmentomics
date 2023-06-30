@@ -5,7 +5,7 @@ library(pROC)
 library(ggpubr)
 
 ### Set variables
-path <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier"
+path <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier"
 
 types <- c("status", "lfs")
 names <- c("Healthy Non-Carriers vs LFS Carriers", "LFS Cancer Free vs Active Cancer")
@@ -71,11 +71,14 @@ for (i in c(1:length(types))) {
   }
   ### Format plotting tables
   data_roc$Metric <- factor(data_roc$Metric, levels = unique(data_roc$Metric),
-                            labels = c("Dinucleotide", "End Motif", "Fragment Length", "Nucleosome Distance", "Fragment Ratio", "Accessibility TCGA/DHS", "Accessibility TFBS"))
+                            labels = c("Breakpoint", "Dinucleotide", "End Motif", "Fragment Length", "Nucleosome Distance", 
+                                       "Fragment Ratio", "Accessibility TCGA/DHS", "Accessibility TFBS"))
   data_auc$Metric <- factor(data_auc$Metric, levels = unique(data_auc$Metric),
-                            labels = c("Dinucleotide", "End Motif", "Fragment Length", "Nucleosome Distance", "Fragment Ratio", "Accessibility TCGA/DHS", "Accessibility TFBS"))
+                            labels = c("Breakpoint", "Dinucleotide", "End Motif", "Fragment Length", "Nucleosome Distance", 
+                                       "Fragment Ratio", "Accessibility TCGA/DHS", "Accessibility TFBS"))
   data_cm$Metric <- factor(data_cm$Metric, levels = unique(data_cm$Metric),
-                           labels = c("Dinucleotide", "End Motif", "Fragment Length", "Nucleosome Distance", "Fragment Ratio", "Accessibility TCGA/DHS", "Accessibility TFBS"))
+                           labels = c("Breakpoint", "Dinucleotide", "End Motif", "Fragment Length", "Nucleosome Distance", 
+                                      "Fragment Ratio", "Accessibility TCGA/DHS", "Accessibility TFBS"))
   
   ### Set theme
   theme <- theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 13), 
@@ -96,8 +99,8 @@ for (i in c(1:length(types))) {
   AUC_plot <- ggplot(data_roc) +
     geom_line(aes(sensitivity, specificity, group = Metric, color = Metric)) +
     geom_abline(intercept = 0, linetype = "dashed", alpha = 0.5) +
-    geom_text(data = data_auc, aes(x = 0.7, y = c(seq(0, 0.36, 0.06)), color = Metric, label = paste0(Metric, " = ", auc)), size = 4) +
-    scale_color_manual(values = c("#000000", "#009E73", "#E69F00", "#0072B2", "#D55E00", "#CC79A7", "#56B4E9")) +
+    geom_text(data = data_auc, aes(x = 0.7, y = c(seq(0, 0.42, 0.06)), color = Metric, label = paste0(Metric, " = ", auc)), size = 4) +
+    scale_color_manual(values = c("grey65", "#000000", "#009E73", "#E69F00", "#0072B2", "#D55E00", "#CC79A7", "#56B4E9")) +
     xlab("False Positive Rate") + 
     ylab("True Positive Rate") +
     ggtitle("ROC Curves") + 
@@ -110,7 +113,7 @@ for (i in c(1:length(types))) {
     geom_point(aes(sensitivity, specificity, color = Metric), size = 3) +
     geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey") +
     geom_vline(xintercept = 0.5, linetype = "dashed", color = "grey") +
-    scale_color_manual(values = c("#000000", "#009E73", "#E69F00", "#0072B2", "#D55E00", "#CC79A7", "#56B4E9")) +
+    scale_color_manual(values = c("grey65", "#000000", "#009E73", "#E69F00", "#0072B2", "#D55E00", "#CC79A7", "#56B4E9")) +
     xlab("Sensitivity") + 
     ylab("Specificity") +
     labs(color = "") +

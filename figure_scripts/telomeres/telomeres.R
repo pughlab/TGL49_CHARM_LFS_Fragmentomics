@@ -5,11 +5,12 @@ library(reshape2)
 library(grid)
 library(ggpubr)
 library(lemon)
+library(matrixStats)
 
 ### Set variables
 path <- "/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/CHARM_Project/LFS"
 healthy_path <- "/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC"
-outdir <- "/Users/derekwong/Google Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/telomeres"
+outdir <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/telomeres"
 source("//Users/derekwong/My Drive/Post-Doc/CHARM/LFS/Figures/TP53_griffin/geom_flat_violin.R")
 
 ### Read in data
@@ -93,7 +94,7 @@ rm(comparison_telseq, comparison_summaries)
 
 plot_comparison <- ggplot(comparison, aes(tel_content, tel_norm, color = diag)) +
   geom_point(pch = 16, alpha = 1) +
-  geom_line(stat = "smooth", method = "lm", se = FALSE, alpha = 0.5, size = 1) +
+  geom_line(stat = "smooth", method = "lm", se = FALSE, alpha = 0.5, linewidth = 1) +
   stat_regline_equation(aes(label = ..rr.label..), label.y = c(100, 50, 25), label.x = 100, size = 5) +
   scale_color_manual(values = c("red", "black")) +
   xlab("TelomereHunter (TRPM)") + 
@@ -104,7 +105,7 @@ plot_comparison <- ggplot(comparison, aes(tel_content, tel_norm, color = diag)) 
   theme(legend.position = "bottom")
 plot_comparison
 
-ggsave(file.path(outdir, "telomere_sup_1.pdf"), plot_comparison, device = "pdf", width = 5, height = 5, units = "in")
+ggsave(file.path(outdir, "telomere_comp_reg.pdf"), plot_comparison, device = "pdf", width = 5, height = 5, units = "in")
 
 ### Plot each analysis vs age
 contexts$years <- as.numeric(contexts$years)
@@ -135,7 +136,7 @@ plot_telseq
 
 Figure <- ggpubr::ggarrange(plot_telhun, plot_telseq, nrow = 1, align = "h", widths = c(1,1))
 Figure
-ggsave(file.path(outdir, "telomere_vs_age.pdf"), Figure, device = "pdf", width = 8, height = 4, units = "in")
+ggsave(file.path(outdir, "telomere_vs_age.pdf"), Figure, device = "pdf", width = 10, height = 5, units = "in")
 
 ### Calculate stats for comparisons
 # TelomereHunter tel_content
@@ -198,8 +199,8 @@ plot_tel <- ggplot(telseq, aes(cancer_status, tel_norm, fill = cancer_status)) +
   scale_y_continuous(limits=c(-50, 500), expand = c(0,0))
 plot_tel
 
-ggsave(file.path(outdir, "telomere_diagnosis_telhun.pdf"), plot_cont, device = "pdf", width = 2, height = 5, units = "in")
-ggsave(file.path(outdir, "telomere_diagnosis_telseq.pdf"), plot_tel, device = "pdf", width = 2, height = 5, units = "in")
+ggsave(file.path(outdir, "telomere_lfs_cancer_telhun.pdf"), plot_cont, device = "pdf", width = 2.5, height = 5, units = "in")
+#ggsave(file.path(outdir, "telomere_diagnosis_telseq.pdf"), plot_tel, device = "pdf", width = 2, height = 5, units = "in")
 
 ### Calculate stats for tel_content sequences from TelomereHunter vs clinical
 # cancer status
@@ -218,8 +219,7 @@ stats_age <- summaries %>%
                    Mean=mean(tel_content, na.rm = TRUE),
                    SD=sd(tel_content, na.rm = TRUE),
                    N=n())
-my_comparisons_age <- list(c("HBC", "pediatric"),
-                           c("pediatric", "adult"))
+my_comparisons_age <- list(c("pediatric", "adult"))
 
 # previous cancer
 summaries$previous_cancer <- factor(summaries$previous_cancer, levels = c("HBC", "no", "yes"))
@@ -257,7 +257,14 @@ plot_age <- ggplot(summaries, aes(Age, tel_content, fill = Age)) +
   ylab("Telomere Content (TRPM)") +
   ggtitle("Age") + 
   theme +
-  scale_y_continuous(limits=c(-15, 300), expand = c(0,0))
+  scale_y_continuous(limits=c(-15, 210), expand = c(0,0)) +
+  stat_compare_means(comparisons = my_comparisons_age, 
+                     method = "t.test", 
+                     label = "p.signif",
+                     size = 5,
+                     tip.length = 0,
+                     step.increase = 0.11,
+                     position = 0.2)
 plot_age
 
 plot_previous <- ggplot(summaries[summaries$previous_cancer %in% c("HBC", "no", "yes"), ], aes(previous_cancer, tel_content, fill = previous_cancer)) +
@@ -273,9 +280,8 @@ plot_previous <- ggplot(summaries[summaries$previous_cancer %in% c("HBC", "no", 
   scale_y_continuous(limits=c(-15, 300), expand = c(0,0))
 plot_previous
 
-Figure <- ggpubr::ggarrange(plot_age, plot_status, plot_previous, nrow = 1, align = "h")
-Figure
-ggsave(file.path(outdir, "telomere_scores.pdf"), Figure, device = "pdf", width = 6, height = 4, units = "in")
+ggsave(file.path(outdir, "telomere_age_cohort.pdf"), plot_age, device = "pdf", width = 2.5, height = 5, units = "in")
+ggsave(file.path(outdir, "telomere_previous_cancer.pdf"), plot_previous, device = "pdf", width = 2.5, height = 5, units = "in")
 
 ### Create comparison matrix to compare to fragment proportions
 data_prop <- data_prop[data_prop$sample %in% samples$sWGS, ]
@@ -304,7 +310,7 @@ plot_tel_content <- ggplot(comparison[comparison$diag == "LFS", ], aes(tel_conte
   scale_x_continuous(limits = c(0, 200))
 plot_tel_content
 
-ggsave(file.path(outdir, "telomere_1.pdf"), plot_tel_content, device = "pdf", width = 4.5, height = 5, units = "in")
+ggsave(file.path(outdir, "telomere_age_reg.pdf"), plot_tel_content, device = "pdf", width = 6, height = 5, units = "in")
 
 ### Plot telomeres across time
 comparison2 <- comparison[comparison$diag == "LFS", ]
@@ -326,7 +332,7 @@ plot_patients <- ggplot(comparison2, aes(ext_ID, tel_content, group = ext_ID)) +
   theme(axis.text.x = element_text(size = 10, angle = 90, vjust = 0.5, hjust = 1))
 plot_patients
 
-ggsave(file.path(outdir, "telomere_patient.pdf"), plot_patients, device = "pdf", width = 12, height = 2.5, units = "in")
+#ggsave(file.path(outdir, "telomere_patient.pdf"), plot_patients, device = "pdf", width = 12, height = 2.5, units = "in")
 
 ### Create matrix to compare telomere contexts
 data_percents$diag <- "LFS"
@@ -354,7 +360,9 @@ theme <- theme(plot.title = element_text(hjust = 0.5, size = 13),
                legend.text = element_text(size = 12),
                legend.background = element_blank(),
                axis.text = element_text(size = 13),
-               axis.title = element_text(size = 13))
+               axis.title = element_text(size = 13),
+               strip.background = element_blank(),
+               strip.text = element_text(size = 13))
 col <- c("#D95F02", "#7570B3", "#E6AB02", "#66A61E")
 
 data_percents <- data_percents[, 1:6]
@@ -423,5 +431,78 @@ plot_years
 
 Figure <- ggpubr::ggarrange(plot_status, plot_age, plot_years, nrow = 3)
 Figure
-ggsave(file.path(outdir, "telomere_sup_2.pdf"), Figure, device = "pdf", width = 16, height = 8, units = "in")
+ggsave(file.path(outdir, "telomere_contexts_sample.pdf"), Figure, device = "pdf", width = 16, height = 8, units = "in")
+
+### Make boxplots of contexts
+stats_box_status <- percents_melt %>%
+  group_by(cancer_status, variable)%>% 
+  dplyr::summarise(Median=median(value, na.rm = TRUE),
+                   Mean=mean(value, na.rm = TRUE),
+                   SD=sd(value, na.rm = TRUE),
+                   N=n())
+statuses <- unique(stats_box_status$cancer_status)
+types <- unique(stats_box_status$variable)
+p <- c()
+for (i in statuses) {
+  for (j in types) {
+    a <- t.test(percents_melt$value[percents_melt$cancer_status == "HBC" & percents_melt$variable == j], 
+                percents_melt$value[percents_melt$cancer_status == i & percents_melt$variable == j])$p.value
+    p <- c(p, a)
+  }
+}
+stats_box_status$pvalue <- p
+stats_box_status$annot <- ifelse(stats_box_status$pvalue < 0.05 & stats_box_status$pvalue > 0.01, "*",
+                           ifelse(stats_box_status$pvalue < 0.01 & stats_box_status$pvalue > 0.001, "**",
+                                  ifelse(stats_box_status$pvalue < 0.001, "***", "")))
+
+plot_box_status <- ggplot(percents_melt) +
+  geom_boxplot(aes(cancer_status, value, fill = cancer_status), outlier.size = 0.5) +
+  geom_text(data = stats_box_status, aes(cancer_status, Inf, label = annot), vjust = 1.2) +
+  facet_wrap(.~variable, scales = "free", nrow = 1) +
+  xlab("") + 
+  ylab("Proportion") +
+  labs(fill = "Cancer Status") +
+  ggtitle("Cancer Status") + 
+  scale_fill_manual(labels = c("Healthy", "Negative", "Positive"), 
+                    values = c("grey", "#a6cee3", "#fb9a99")) +
+  theme +
+  theme(legend.position = "bottom")
+plot_box_status
+ggsave(file.path(outdir, "telomere_contexts_boxplot_status.pdf"), plot_box_status, device = "pdf", width = 7, height = 5, units = "in")
+
+stats_box_age <- percents_melt %>%
+  group_by(Age, variable)%>% 
+  dplyr::summarise(Median=median(value, na.rm = TRUE),
+                   Mean=mean(value, na.rm = TRUE),
+                   SD=sd(value, na.rm = TRUE),
+                   N=n())
+statuses <- unique(stats_box_age$Age)
+types <- unique(stats_box_age$variable)
+p <- c()
+for (i in statuses) {
+  for (j in types) {
+    a <- t.test(percents_melt$value[percents_melt$Age == "HBC" & percents_melt$variable == j], 
+                percents_melt$value[percents_melt$Age == i & percents_melt$variable == j])$p.value
+    p <- c(p, a)
+  }
+}
+stats_box_age$pvalue <- p
+stats_box_age$annot <- ifelse(stats_box_age$pvalue < 0.05 & stats_box_age$pvalue > 0.01, "*",
+                                 ifelse(stats_box_age$pvalue < 0.01 & stats_box_age$pvalue > 0.001, "**",
+                                        ifelse(stats_box_age$pvalue < 0.001, "***", "")))
+
+plot_box_age <- ggplot(percents_melt) +
+  geom_boxplot(aes(Age, value, fill = Age), outlier.size = 0.5) +
+  geom_text(data = stats_box_age, aes(Age, Inf, label = annot), vjust = 1.2, size = 5) +
+  facet_wrap(.~variable, scales = "free", nrow = 1) +
+  xlab("") + 
+  ylab("Proportion") +
+  labs(fill = "Age") +
+  ggtitle("Age") + 
+  scale_fill_manual(labels = c("Healthy", "Pediatric", "Adult"), 
+                    values = c("grey", "#a6cee3", "#fb9a99")) +
+  theme +
+  theme(legend.position = "bottom")
+plot_box_age
+ggsave(file.path(outdir, "telomere_contexts_boxplot_age.pdf"), plot_box_age, device = "pdf", width = 7, height = 5, units = "in")
 

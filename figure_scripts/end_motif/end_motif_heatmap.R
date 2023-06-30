@@ -6,14 +6,14 @@ library(circlize)
 
 ### Set paths
 path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/end_motifs"
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/end_motif"
+outdir <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/end_motif"
 healthy_path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/end_motifs"
 
 ### Find paths
 data <- list.files(path, "motifs.txt", full.names = TRUE)
-data <- data[grepl("genome", data)]
+data <- data[grepl("genome2", data)]
 data_normal <- list.files(healthy_path, "motifs.txt", full.names = TRUE)
-data_normal <- data_normal[grepl("genome", data_normal)]
+data_normal <- data_normal[grepl("genome2", data_normal)]
 
 ### Import data 
 data <- read.delim(data)
@@ -77,8 +77,8 @@ data_motif <- as.matrix(data_motif)
 row.names(data_motif) <- row.names(data)
 
 ### Set annotation and heatmap colours
-col_heat <- colorRamp2(c(0.5, 1, 1.5), 
-                       c("#1f78b4", "white", "#e31a1c"))
+col_heat <- colorRamp2(c(0.5, 0.7, 0.9, 1.1, 1.3, 1.5), 
+                       c("#fde725", "#7ad151", "#22a884", "#2a788e", "#414487", "#440154"))
 col_status <- c(Healthy = "#B2DF8A", Positive = "#fb9a99", Negative = "#a6cee3")
 col_previous <- c(Healthy = "#B2DF8A", Yes = "#fb9a99", No = "grey95")
 col_age <- c(Healthy = "#B2DF8A", Adult = "#6A3D9A", Pediatric = "#CAB2D6")
@@ -108,7 +108,7 @@ right_annotation <- rowAnnotation("End Motif\n5' to 3'" = data_motif,
                                   annotation_name_gp = gpar(fontsize = 8),
                                   annotation_name_side = "top",
                                   annotation_name_rot = 0,
-                                  simple_anno_size = unit(0.25, "cm"),
+                                  simple_anno_size = unit(0.3, "cm"),
                                   show_legend = c(FALSE))
 
 ### Set legend labels
@@ -153,7 +153,7 @@ annotation_legend = packLegend(list = list(Legend(title = "Patient Type",
                                direction = "horizontal")
 
 ## Generate Heatmap
-pdf(file.path(outdir, "end_motifs_heatmap.pdf"), height = 7, width = 5)
+pdf(file.path(outdir, "end_motifs_heatmap.pdf"), height = 6, width = 5)
 Heatmap <- Heatmap(data,
                    col = col_heat,
                    show_row_names = FALSE,

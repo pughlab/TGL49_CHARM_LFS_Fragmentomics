@@ -5,7 +5,7 @@ library(ComplexHeatmap)
 
 ### Set variables
 path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS"
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/fragment_ratio"
+outdir <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/fragment_ratio"
 healthy <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC"
 
 data_ratio <- file.path(path, "fragmentomics", "CHARM_LFS_ratio_5Mb.txt")

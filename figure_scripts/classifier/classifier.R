@@ -20,6 +20,7 @@ Features.CVparam <- trainControl(method = "repeatedcv", number = 10, repeats = 3
 # Split the data into 10 folds
 Splits10 <- list()
 All.kFold <- list()
+But.kfold <- list()
 
 for (j in 1:100) {
   # split the data for 100 times, result of each split is saved in Splits10
@@ -27,6 +28,7 @@ for (j in 1:100) {
 
   #10-fold cross validation to calculate the probability (score) of each sample being cancer
   kFold.list <- list()
+  kFold.but <- list()
 
   for(i in 1:10) {
     Indices = Splits10[[j]]$samples[[i]]
@@ -46,7 +48,14 @@ for (j in 1:100) {
     Prediction.classProbs$sample <- row.names(TestData)
 
     kFold.list[[i]] <- Prediction.classProbs
-
+    
+    #Predict Butler data
+    Prediction.but <- predict(Model, newdata = Data_butler, type = "prob") %>% data.frame
+    
+    Prediction.but$PredictedClass <- predict(Model, newdata = Data_butler, type = "raw")
+    Prediction.but$sample <- row.names(Data_butler)
+    
+    kFold.but[[i]] <- Prediction.but
   }
 
   Predicted.classProbs <- kFold.list[[1]]$TestPred
@@ -55,23 +64,5 @@ for (j in 1:100) {
   }
 
   All.kFold[[j]] <- kFold.list
+  But.kfold[[j]] <- kFold.but
 }
-
-# Features.list <- list()
-#
-# for (j in 1:100) {
-#   # Get features from the 100 repeats, each run has 10 folds (runs)
-#   Feature.onetime <- c()
-#   kFold.list <- All.kFold[[j]]
-#   for (i in 1:10) {
-#     Feature.onetime <- c(Feature.onetime, kFold.list[[i]]$Model$finalModel$xNames)
-#   }
-#   Feature.onetime <- unique(Feature.onetime)
-#
-#   Features.list[[j]] <- Feature.onetime
-# }
-#
-# saveRDS(Features.list, 'Features.list.rds') # 100 groups of features saved here
-#
-# Features <- unique(unlist(Features.list))
-# write.table(Features, 'Features.tsv', quote=F, col.names=F, row.names=F)

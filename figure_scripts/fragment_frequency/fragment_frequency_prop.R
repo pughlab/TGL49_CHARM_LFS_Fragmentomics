@@ -9,7 +9,7 @@ library(ggh4x)
 
 ### Set paths
 path <- "/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/CHARM_Project/LFS/insert_size"
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/fragment_frequency"
+outdir <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/fragment_frequency"
 healthy_path <- "/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/insert_size"
 samples <- "/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/CHARM_Project/LFS/samples/sample_list.txt"
 
@@ -98,7 +98,7 @@ theme <- theme(plot.title = element_text(hjust = 0.5, size = 13),
                axis.line = element_line(colour = "black"),
                axis.text = element_text(size = 13),
                axis.text.x = element_blank(),
-               legend.position = "none",
+               legend.position = "right",
                legend.text = element_text(size = 13),
                panel.grid.major = element_blank(),
                panel.grid.minor = element_blank(),
@@ -123,5 +123,5 @@ plot <- ggplot(data_melt) +
   
 plot
 
-ggsave(file.path(outdir, "fragment_proportions.pdf"), width = 4.5, height = 3)
+ggsave(file.path(outdir, "fragment_proportions.pdf"), width = 6, height = 3)
 

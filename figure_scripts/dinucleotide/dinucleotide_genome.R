@@ -10,7 +10,7 @@ library(zplyr)
 
 ### Set paths
 path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/dinucleotide"
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/dinucleotide"
+outdir <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/dinucleotide"
 healthy_path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/dinucleotide"
 sim_data <- "/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/External_data/Snyder_nucleosome/DSP_sim_nucfreq.txt"
 
@@ -215,8 +215,8 @@ b <- ks.test(data_zscore$median[data_zscore$context == "CC/CG/GC/GG" & data_zsco
 b <- formatC(b, format = "e", digits = 2)
 
 
-ann_text <- data.frame(x = c(rep(0.2, 3), rep(0.8, 3)),
-                       y = c(rep(0.8, 3), rep(0.8, 3)),
+ann_text <- data.frame(x = c(rep(0.2, 3), rep(0.55, 3)),
+                       y = c(rep(0.55, 3), rep(0.55, 3)),
                        context = c(rep("AA/AT/TA/TT", 3), rep("CC/CG/GC/GG", 3)),
                        diag = rep(diags, 2),
                        pvalue = x,
@@ -290,7 +290,7 @@ fig_reg <- ggplot(reg_plot, aes(var1, var2)) +
   theme(axis.text.x = element_text(angle = 90, hjust = 0.5, vjust = 0.5))
 fig_reg
 
-ggsave(file.path(outdir, "dinucleotide_contexts_regression.pdf"), fig_reg, width = 5, height = 6)
+ggsave(file.path(outdir, "dinucleotide_contexts_regression.pdf"), fig_reg, width = 5, height = 4)
 
 fig_z <- ggplot(data_zscore) +
   geom_density(aes(median, fill = position), color = NA, alpha = 0.25) +
@@ -305,7 +305,7 @@ fig_z <- ggplot(data_zscore) +
   scale_y_continuous(expand = c(0,0)) +
   scale_x_continuous(expand = c(0,0), breaks = c(-0.2, 0, 0.2))
 fig_z
-ggsave(file.path(outdir, paste0("dinucleotide_contexts_zscores.pdf")), fig_z, width = 6, height = 6.5)
+ggsave(file.path(outdir, paste0("dinucleotide_contexts_zscores.pdf")), fig_z, width = 6, height = 4)
 
 
 

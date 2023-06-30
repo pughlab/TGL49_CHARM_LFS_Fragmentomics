@@ -6,7 +6,7 @@ library(gridExtra)
 
 ### Set paths
 path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/nucleosome_peaks"
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/nucleosome_peaks"
+outdir <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/nucleosome_peaks"
 healthy_path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/nucleosome_peaks"
 samples <- "/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/CHARM_Project/LFS/samples/sample_list.txt"
 
@@ -132,6 +132,18 @@ data_stats$annot <- ifelse(data_stats$pvalue < 0.05 & data_stats$pvalue > 0.01, 
                            ifelse(data_stats$pvalue < 0.01 & data_stats$pvalue > 0.001, "**",
                                   ifelse(data_stats$pvalue < 0.001, "***", "")))
 
+data_aov <- data_plot2[data_plot2$variable == "Proximal (+/- 1kb)", ]
+model <- aov(value ~ diag, data = data_aov)
+x <- summary(model)
+y <- round(x[[1]][["Pr(>F)"]], 4)
+stats_anova_proximal <- y[[1]]
+
+data_aov <- data_plot2[data_plot2$variable == "Distal (>1kb)", ]
+model <- aov(value ~ diag, data = data_aov)
+x <- summary(model)
+y <- round(x[[1]][["Pr(>F)"]], 4)
+stats_anova_distal <- y[[1]]
+
 ### Plot differences
 theme <- theme(plot.title = element_text(hjust = 0.5, size = 13), 
                axis.title = element_text(size = 13),
@@ -160,13 +172,13 @@ plot1 <- ggplot(data_plot1) +
   scale_y_continuous(limits=c(0, 3), expand = c(0,0))
 plot1
 
-ggsave(file.path(outdir, "nucleosome_peaks_frequency.pdf"), width = 8, height = 5)
+ggsave(file.path(outdir, "nucleosome_peaks_frequency.pdf"), width = 9, height = 3.5)
 
 plot2 <- ggplot(data_plot2) +
   geom_boxplot(aes(diag, value, fill = diag), alpha = 0.5, outlier.shape = NA) +
   geom_jitter(aes(diag, value), width = 0.2, size = 0.75) +
   geom_text(data = data_stats, aes(diag, 0.39, label = annot), size = 4) +
-  geom_text(data = data_stats, aes(diag, 0.1, label = N), size = 4) +
+  geom_text(data = data_stats, aes(diag, 0.06, label = N), size = 4) +
   facet_grid(.~variable) +
   ggtitle("Fragment Length Proportions") +
   labs(fill = "Patient Type") +
@@ -176,10 +188,10 @@ plot2 <- ggplot(data_plot2) +
   theme +
   theme(axis.text.x = element_blank(),
         legend.position = "right") +
-  scale_y_continuous(limits = c(0.08, 0.4))
+  scale_y_continuous(limits = c(0.05, 0.4))
 plot2
 
-ggsave(file.path(outdir, "nucleosome_peaks_proportions.pdf"), width = 6, height = 5)
+ggsave(file.path(outdir, "nucleosome_peaks_proportions.pdf"), width = 6, height = 3.5)
 
 
 
