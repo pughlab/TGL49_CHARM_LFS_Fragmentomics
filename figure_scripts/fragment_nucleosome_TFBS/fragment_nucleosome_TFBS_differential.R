@@ -4,12 +4,12 @@ library(ComplexHeatmap)
 library(circlize)
 
 ### Set paths
-path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/griffin_all/TFBS"
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/fragment_nucleosome_TFBS"
-healthy_path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/griffin_all/TFBS"
+path <- "data/griffin/TFBS"
+outdir <- ""
+healthy_path <- "hbc/griffin/TFBS"
 
 data_griffin <- list.files(path, "features", full.names = TRUE)
-data_samples <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/samples/sample_list.txt"
+data_samples <- "sample_list.txt"
 data_normal <- list.files(healthy_path, "features", full.names = TRUE)
 
 ### Import data 
