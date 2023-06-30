@@ -8,9 +8,9 @@ library(patchwork)
 library(ggpubr)
 
 ### Set paths
-path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/end_motifs"
-outdir <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/end_motif"
-healthy_path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/end_motifs"
+path <- "data/end_motifs"
+outdir <- ""
+healthy_path <- "hbc/end_motifs"
 
 ### Find paths
 data <- list.files(path, "motifs.txt", full.names = TRUE)
@@ -22,10 +22,10 @@ data_normal <- data_normal[grepl("genome2", data_normal)]
 ### Import data 
 data <- read.delim(data)
 data_normal <- read.delim(data_normal)
-data_samples <- read.delim("/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/samples/sample_list.txt")
+data_samples <- read.delim("sample_list.txt")
 
 data_lo <- read.delim(data_lo)
-samples_lo <- read.delim("/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/CHARM_Project/LFS/samples/DNASE1L3_list.txt")
+samples_lo <- read.delim("DNASE1L3_list.txt")
 
 ### Remove failed and unknown samples and format 
 exclude <- c("TGL49_0025_Cf_U_PE_321_WG", "TGL49_0035_Cf_U_PE_310_WG", "TGL49_0041_Cf_U_PE_317_WG", "TGL49_0209_Cf_U_PE_373_WG")
