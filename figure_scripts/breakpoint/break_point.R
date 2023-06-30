@@ -4,9 +4,9 @@ library(matrixStats)
 library(reshape2)
 
 ### Set paths
-path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/breakpoint"
-outdir <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/breakpoint"
-healthy_path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/breakpoint"
+path <- "data/breakpoint"
+outdir <- ""
+healthy_path <- "hbc/breakpoint"
 
 ### Find paths
 data <- list.files(path, "ratio.txt", full.names = TRUE)
@@ -16,7 +16,7 @@ data_normal <- list.files(healthy_path, "ratio.txt", full.names = TRUE)
 ### Import data 
 data <- read.delim(data)
 data_normal <- read.delim(data_normal)
-data_samples <- read.delim("/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/samples/sample_list.txt")
+data_samples <- read.delim("sample_list.txt")
 
 ### Remove failed and unknown samples and format 
 exclude <- c("TGL49_0025_Cf_U_PE_321_WG", "TGL49_0035_Cf_U_PE_310_WG", "TGL49_0041_Cf_U_PE_317_WG", "TGL49_0209_Cf_U_PE_373_WG")
