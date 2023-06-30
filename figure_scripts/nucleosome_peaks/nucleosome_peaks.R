@@ -9,9 +9,9 @@ library(ggpubr)
 sites <- c("genome", "fragments")
 labels <- c("All fragments", "167bp fragments")
 
-path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/nucleosome_peaks"
-outdir <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/nucleosome_peaks"
-healthy_path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/nucleosome_peaks"
+path <- "data/nucleosome_peaks"
+outdir <- ""
+healthy_path <- "hbc/nucleosome_peaks"
 
 for (i in c(1:length(sites))) {
   ### Set variables
