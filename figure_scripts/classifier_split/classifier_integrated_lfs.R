@@ -5,10 +5,10 @@ library(pROC)
 library(data.table)
 
 ### Set variables
-source("/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier_split/FuncClassifier.R")
-class <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier_split/classifier.R"
-path <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier"
-outdir <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier_split"
+source("figure_scripts/classifier_split/FuncClassifier.R")
+class <- "figure_scripts/classifier_split/classifier.R"
+path <- "data/classifier_split"
+outdir <- ""
 
 ### Read in sample data
 data_samples <- read.delim(file.path(outdir, "samples_split.txt"))
