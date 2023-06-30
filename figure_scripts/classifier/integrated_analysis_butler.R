@@ -4,7 +4,7 @@ library(ggpubr)
 library(lemon)
 
 ### Set variables
-path <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier"
+path <- "data/classifier"
 
 ### Find files
 filenames <- list.files(path, ".rds", full.names = TRUE)
@@ -19,7 +19,7 @@ i <- 1
 file <- filenames[[i]]
 
 data <- readRDS(file)
-samples <- read.delim("/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/Healthy_control_cohorts/HBC_Butler/samples/sample_list_butler.txt")
+samples <- read.delim("butler/sample_list_butler.txt")
 samples <- samples[!(samples$patient == "HD-130"), ]
 
 ### Unlist files
