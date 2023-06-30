@@ -6,15 +6,15 @@ library(dendextend)
 library(psych)
 
 ### Set variables
-path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS"
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/fragment_coverage"
-healthy <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC"
+path <- "data/fragment_ratio"
+outdir <- ""
+healthy <- "hbc/fragment_ratio"
 
 ### Import data (Starting with the 5Mb ratios)
-data_cov <- read.delim(list.files(file.path(path, "fragmentomics"), "frag", full.names = TRUE))
-data_normal <- read.delim(list.files(file.path(healthy, "fragmentomics"), "frag", full.names = TRUE))
-samples <- read.delim(file.path(path, "samples/sample_list.txt"))
-de_table <- read.delim(file.path(outdir, "fragment_coverage_differential.txt"))
+data_cov <- read.delim(list.files(file.path(path), "frag", full.names = TRUE))
+data_normal <- read.delim(list.files(file.path(healthy), "frag", full.names = TRUE))
+samples <- read.delim("sample_list.txt")
+de_table <- read.delim(file.path(path, "fragment_coverage_differential.txt"))
 
 ### Remove failed samples
 exclude <- c("TGL49_0025_Cf_U_PE_321_WG", "TGL49_0209_Cf_U_PE_373_WG")
