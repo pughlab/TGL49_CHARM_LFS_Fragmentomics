@@ -5,7 +5,7 @@ library(pROC)
 library(ggpubr)
 
 ### Set variables
-path <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier"
+path <- "data/classifier"
 
 types <- c("status", "lfs")
 names <- c("Healthy Non-Carriers vs LFS Carriers", "LFS Cancer Free vs Active Cancer")
