@@ -5,14 +5,14 @@ library(pROC)
 library(ggpubr)
 
 ### Set variables
-path <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier_split"
+path <- "data/classifier_split"
 
 types <- c("status_test", "status_val", "lfs_test", "lfs_val")
 titles <- c("Validation Cohort", "Test Cohort", "Validation Cohort", "Test Cohort")
 names <- c("Healthy Non-Carriers vs LFS Carriers\nValidation Cohort", "Healthy Non-Carriers vs LFS Carriers\nTest Cohort",
            "LFS Cancer Free vs Active Cancer\nValidation Cohort", "LFS Cancer Free vs Active Cancer\nTest Cohort")
 
-samples <- read.delim("/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier_split/samples_split.txt")
+samples <- read.delim("samples_split.txt")
 samples_status <- samples[samples$cancer_status %in% c("negative", "healthy"), ]
 samples_status$ActualClass <- ifelse(samples_status$cancer_status == "negative", "positive", "negative")
 
