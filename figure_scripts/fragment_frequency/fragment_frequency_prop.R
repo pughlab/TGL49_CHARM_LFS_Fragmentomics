@@ -8,10 +8,10 @@ library(gridExtra)
 library(ggh4x)
 
 ### Set paths
-path <- "/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/CHARM_Project/LFS/insert_size"
-outdir <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/fragment_frequency"
-healthy_path <- "/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/insert_size"
-samples <- "/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/CHARM_Project/LFS/samples/sample_list.txt"
+path <- "data/insert_size"
+outdir <- ""
+healthy_path <- "hbc/insert_size"
+samples <- "sample_list.txt"
 
 ## Import data
 data_frequency <- read.delim(list.files(path, "LFS_fragment.txt", full.names = TRUE))
