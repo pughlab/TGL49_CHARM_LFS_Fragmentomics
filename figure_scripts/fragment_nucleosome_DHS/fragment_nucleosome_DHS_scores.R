@@ -8,13 +8,13 @@ library(lemon)
 library(ggpubr)
 
 ### Set paths
-path <- "/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/CHARM_Project/LFS/griffin/DHS"
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/fragment_nucleosome_DHS"
-healthy_path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/griffin/DHS"
+path <- "data/griffin/DHS"
+outdir <- ""
+healthy_path <- "hbc/griffin/DHS"
 
 ### Read in samples
-data_samples <- read.delim("/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/samples/sample_list.txt")
-healthy_samples <- read.delim("/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/sample_list.txt")
+data_samples <- read.delim("sample_list.txt")
+healthy_samples <- read.delim("hbc/sample_list.txt")
 
 ### Get list of files
 data_griffin <- list.files(path, "features", full.names = TRUE)
