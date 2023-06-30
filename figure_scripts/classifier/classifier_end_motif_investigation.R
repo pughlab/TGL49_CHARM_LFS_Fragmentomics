@@ -4,19 +4,19 @@ library(tidyverse)
 library(pROC)
 
 ### Set variables
-source("/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier/FuncClassifier.R")
-class <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier/classifier.R"
-path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/end_motifs"
-healthy_path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/end_motifs"
-outdir <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier"
+source("figure_scripts/classifier/FuncClassifier.R")
+class <- "figure_scripts/classifier/classifier.R"
+path <- "data/end_motifs"
+healthy_path <- "hbc/end_motifs"
+outdir <- ""
 
 ### Import data 
 data_end <- read.delim(list.files(path, "CHARM_LFS_genome2_end_motifs.txt", full.names = TRUE))
 normal_end <- read.delim(list.files(healthy_path, "CHARM_HBC_genome2_end_motifs.txt", full.names = TRUE))
-data_samples <- read.delim("/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/samples/sample_list.txt")
+data_samples <- read.delim("sample_list.txt")
 
-group_lfs <- read.delim(list.files("/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/CHARM_Project/LFS/read_group", ".txt", full.names = TRUE))
-group_hbc <- read.delim(list.files("/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/read_group", ".txt", full.names = TRUE))
+group_lfs <- read.delim(list.files("data/read_group", ".txt", full.names = TRUE))
+group_hbc <- read.delim(list.files("hbc/read_group", ".txt", full.names = TRUE))
 
 ### Remove failed data_samples
 exclude <- c("TGL49_0025_Cf_U_PE_321_WG", "TGL49_0035_Cf_U_PE_310_WG", "TGL49_0041_Cf_U_PE_317_WG", "TGL49_0209_Cf_U_PE_373_WG")
