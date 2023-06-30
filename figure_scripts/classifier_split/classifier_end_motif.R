@@ -4,11 +4,11 @@ library(tidyverse)
 library(pROC)
 
 ### Set variables
-source("/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier/FuncClassifier.R")
-class <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier_split/classifier.R"
-path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/end_motifs"
-healthy_path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/end_motifs"
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier_split"
+source("figure_scripts/classifier_split/FuncClassifier.R")
+class <- "figure_scripts/classifier_split/classifier.R"
+path <- "data/end_motifs"
+healthy_path <- "hbc/end_motifs"
+outdir <- ""
 
 ### Import data 
 data_end <- read.delim(list.files(path, "CHARM_LFS_genome_end_motifs.txt", full.names = TRUE))
