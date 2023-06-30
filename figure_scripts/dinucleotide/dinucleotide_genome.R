@@ -9,10 +9,10 @@ library(ggh4x)
 library(zplyr)
 
 ### Set paths
-path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/dinucleotide"
-outdir <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/dinucleotide"
-healthy_path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/dinucleotide"
-sim_data <- "/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/External_data/Snyder_nucleosome/DSP_sim_nucfreq.txt"
+path <- "data/dinucleotide"
+outdir <- ""
+healthy_path <- "hbc/dinucleotide"
+sim_data <- "data/DSP_sim_nucfreq.txt"
 
 ### Find paths
 data <- list.files(path, "dinucleotide.txt", full.names = TRUE)
@@ -23,7 +23,7 @@ data_normal <- data_normal[grepl("genome", data_normal)]
 ### Import data 
 data <- read.delim(data)
 data_normal <- read.delim(data_normal)
-data_samples <- read.delim("/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/samples/sample_list.txt")
+data_samples <- read.delim("sample_list.txt")
 data_sim <- read.delim(sim_data)
 
 ### Remove failed and unknown samples and format 
