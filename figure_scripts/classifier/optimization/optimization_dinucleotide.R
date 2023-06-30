@@ -5,16 +5,16 @@ library(pROC)
 library(data.table)
 
 ### Set variables
-path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/dinucleotide"
-healthy_path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/dinucleotide"
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier/optimization"
+path <- "data/dinucleotide"
+healthy_path <- "hbc/dinucleotide"
+outdir <- ""
 title <- "dinucleotide"
 title2 <- "Dinucleotide"
 
 ### Import data (Starting with the 5Mb dinucs)
 data <- read.delim(list.files(path, "genome_dinucleotide.txt", full.names = TRUE))
 normal <- read.delim(list.files(healthy_path, "genome_dinucleotide.txt", full.names = TRUE))
-data_samples <- read.delim("/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/samples/sample_list.txt")
+data_samples <- read.delim("sample_list.txt")
 
 ### Remove failed data_samples
 exclude <- c("TGL49_0025_Cf_U_PE_321_WG", "TGL49_0035_Cf_U_PE_310_WG", "TGL49_0041_Cf_U_PE_317_WG", "TGL49_0209_Cf_U_PE_373_WG")
@@ -63,4 +63,4 @@ normal_gc <- normal_gc[, colnames(normal_gc) %like% "X"]
 normal <- bind_cols(normal_at, normal_gc)
 
 ### Run classifiers
-source("/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier/optimization/runner.R")
+source("figure_scripts/classifier/optimization/runner.R")
