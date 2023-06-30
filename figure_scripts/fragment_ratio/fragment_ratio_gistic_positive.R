@@ -6,17 +6,17 @@ library(scales)
 library(psych)
 
 ### Set variables
-path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS"
-healthy <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC"
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/fragment_ratio"
-gistic <- "/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/External_data/TCGA_GISTIC/TCGA_merged_GISTIC_hg38.txt"
+path <- "data/fragment_ratio"
+healthy <- "hbc/fragment_ratio"
+outdir <- ""
+gistic <- "data/TCGA_merged_GISTIC_hg38.txt"
 
 ### Import data (Starting with the 5Mb ratios)
 gistic <- read.delim(gistic)
-data_ratio <- read.delim(file.path(path, "fragmentomics", "CHARM_LFS_ratio_5Mb.txt"))
-data_ichor <- read.delim(file.path(path, "ichorCNA", "CHARM_LFS_ichorCNA_summary_reviewed.txt"))
-de_table <- read.delim(file.path(outdir, "fragment_ratio_differential.txt"))
-samples <- read.delim(file.path(path, "samples/sample_list.txt"))
+data_ratio <- read.delim(file.path(path, "CHARM_LFS_ratio_5Mb.txt"))
+data_ichor <- read.delim(file.path("data/ichorCNA", "CHARM_LFS_ichorCNA_summary_reviewed.txt"))
+de_table <- read.delim("data/fragment_ratio_differential.txt")
+samples <- read.delim("sample_list.txt")
 
 ### Remove failed samples
 exclude <- c("TGL49_0025_Cf_U_PE_321_WG", "TGL49_0035_Cf_U_PE_310_WG", "TGL49_0041_Cf_U_PE_317_WG", "TGL49_0209_Cf_U_PE_373_WG")
