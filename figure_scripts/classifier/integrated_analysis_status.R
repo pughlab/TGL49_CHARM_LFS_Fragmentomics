@@ -8,7 +8,7 @@ library(rstatix)
 library(circlize)
 
 ### Set variables
-path <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier"
+path <- "data/classifier"
 
 ### Find files
 filenames <- list.files(path, "status.rds", full.names = TRUE)
@@ -16,8 +16,8 @@ filenames <- filenames[grepl("integrated", filenames)]
 
 ### Read in file
 data <- readRDS(filenames)
-samples <- read.delim("/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/CHARM_Project/LFS/samples/sample_list.txt")
-samples_healthy <- read.delim("/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/sample_list.txt")
+samples <- read.delim("sample_list.txt")
+samples_healthy <- read.delim("hbc/sample_list.txt")
 
 cancer_patients <- unique(samples$ext_ID[samples$cancer_status == "positive"])
 
