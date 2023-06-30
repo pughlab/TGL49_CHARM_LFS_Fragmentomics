@@ -4,12 +4,12 @@ library(tidyverse)
 library(pROC)
 
 ### Set variables
-source("/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier/FuncClassifier.R")
-class <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier/classifier.R"
-path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/griffin_all"
-healthy_path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/griffin_all"
-butler_path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/HBC_Butler/griffin"
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier"
+source("figure_scripts/classifier/FuncClassifier.R")
+class <- "figure_scripts/classifier/classifier.R"
+path <- "data/griffin"
+healthy_path <- "hbc/griffin"
+butler_path <- "butler/griffin"
+outdir <- ""
 
 sites <- c("DHS", "TCGA")
 data_griffin <- c()
@@ -34,7 +34,7 @@ for (site in sites) {
 }
 
 ### Import data 
-data_samples <- read.delim("/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/samples/sample_list.txt")
+data_samples <- read.delim("sample_list.txt")
 
 ### Remove failed samples
 exclude <- c("TGL49_0025_Cf_U_PE_321_WG", "TGL49_0035_Cf_U_PE_310_WG", "TGL49_0041_Cf_U_PE_317_WG", "TGL49_0209_Cf_U_PE_373_WG")
