@@ -4,18 +4,18 @@ library(tidyverse)
 library(pROC)
 
 ### Set variables
-source("/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier/FuncClassifier.R")
-class <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier/classifier.R"
-path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS"
-healthy <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC"
-butler <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/HBC_Butler"
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier"
+source("figure_scripts/classifier/FuncClassifier.R")
+class <- "figure_scripts/classifier/classifier.R"
+path <- "data/fragment_ratio"
+healthy <- "hbc/fragment_ratio"
+butler <- "butler/fragment_ratio"
+outdir <- ""
 
 ### Import data (Starting with the 5Mb ratios)
-data_ratio <- read.delim(file.path(path, "fragmentomics", "CHARM_LFS_ratio_5Mb.txt"))
-normal_ratio <- read.delim(file.path(healthy, "fragmentomics", "TGL49_HBC_ratio_5Mb.txt"))
-butler_ratio <- read.delim(file.path(butler, "fragmentomics", "HBC_Butler_ratio_5Mb.txt"))
-data_samples <- read.delim(file.path(path, "samples/sample_list.txt"))
+data_ratio <- read.delim(file.path(path, "CHARM_LFS_ratio_5Mb.txt"))
+normal_ratio <- read.delim(file.path(healthy, "TGL49_HBC_ratio_5Mb.txt"))
+butler_ratio <- read.delim(file.path(butler, "HBC_Butler_ratio_5Mb.txt"))
+data_samples <- read.delim("sample_list.txt"))
 
 ### Remove failed samples
 exclude <- c("TGL49_0025_Cf_U_PE_321_WG", "TGL49_0035_Cf_U_PE_310_WG", "TGL49_0041_Cf_U_PE_317_WG", "TGL49_0209_Cf_U_PE_373_WG")
