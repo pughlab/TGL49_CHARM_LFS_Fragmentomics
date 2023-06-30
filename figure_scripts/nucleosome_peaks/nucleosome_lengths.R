@@ -5,10 +5,10 @@ library(ggpubr)
 library(gridExtra)
 
 ### Set paths
-path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/nucleosome_peaks"
-outdir <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/nucleosome_peaks"
-healthy_path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/nucleosome_peaks"
-samples <- "/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/CHARM_Project/LFS/samples/sample_list.txt"
+path <- "data/nucleosome_peaks"
+outdir <- ""
+healthy_path <- "hbc/nucleosome_peaks"
+samples <- "sample_list.txt"
 
 ## Import data
 data_prox <- read.delim(list.files(path, "proximal", full.names = TRUE))
