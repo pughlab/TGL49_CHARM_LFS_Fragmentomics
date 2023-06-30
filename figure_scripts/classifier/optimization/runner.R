@@ -37,7 +37,7 @@ for (k in c(1:length(classifiers))){
   
   ### Run suite of classifiers
   set.seed(123)
-  source("/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier/optimization/classifier_opt.R")
+  source("figure_scripts/classifier/optimization/classifier_opt.R")
   
   ### Get Kappa performance
   mean <- mean(kappa)
@@ -81,7 +81,7 @@ for (k in c(1:length(classifiers))){
   
   ### Run suite of classifiers
   set.seed(123)
-  source("/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier/optimization/classifier_opt.R")
+  source("figure_scripts/classifier/optimization/classifier_opt.R")
   
   ### Get Kappa performance
   mean <- mean(kappa)
