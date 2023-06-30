@@ -8,13 +8,13 @@ library(lemon)
 library(matrixStats)
 
 ### Set variables
-path <- "/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/CHARM_Project/LFS"
-healthy_path <- "/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC"
-outdir <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/telomeres"
-source("//Users/derekwong/My Drive/Post-Doc/CHARM/LFS/Figures/TP53_griffin/geom_flat_violin.R")
+path <- "data"
+healthy_path <- "hbc"
+outdir <- ""
+source("geom_flat_violin.R")
 
 ### Read in data
-samples <- read.delim(file.path(path, "samples/sample_list.txt"))
+samples <- read.delim("sample_list.txt"))
 data_contexts <- read.delim(list.files(path, "TelomereHunter_contexts_normalized.txt", recursive = TRUE, full.names = TRUE))
 data_percents <- read.delim(list.files(path, "TelomereHunter_contexts_percent.txt", recursive = TRUE, full.names = TRUE))
 data_summaries <- read.delim(list.files(path, "TelomereHunter_summaries.txt", recursive = TRUE, full.names = TRUE))
