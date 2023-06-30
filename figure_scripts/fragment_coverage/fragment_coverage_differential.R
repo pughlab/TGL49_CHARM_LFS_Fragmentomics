@@ -4,14 +4,14 @@ library(psych)
 library(ComplexHeatmap)
 
 ### Set variables
-path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS"
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/fragment_coverage"
-healthy <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC"
+path <- "data/fragment_ratio"
+outdir <- ""
+healthy <- "hbc/fragment_ratio"
 
 ### Import data (Starting with the 5Mb ratios)
-data_cov <- read.delim(list.files(file.path(path, "fragmentomics"), "frag", full.names = TRUE))
-samples <- read.delim(file.path(path, "samples/sample_list.txt"))
-data_normal <- read.delim(list.files(file.path(healthy, "fragmentomics"), "frag", full.names = TRUE))
+data_cov <- read.delim(list.files(file.path(path), "frag", full.names = TRUE))
+samples <- read.delim(file.path(path, "sample_list.txt"))
+data_normal <- read.delim(list.files(file.path(healthy), "frag", full.names = TRUE))
 
 ### Remove failed samples
 exclude <- c("TGL49_0025_Cf_U_PE_321_WG", "TGL49_0035_Cf_U_PE_310_WG", "TGL49_0041_Cf_U_PE_317_WG", "TGL49_0209_Cf_U_PE_373_WG")
