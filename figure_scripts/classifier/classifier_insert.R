@@ -4,22 +4,22 @@ library(tidyverse)
 library(pROC)
 
 ### Set variables
-source("/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier/FuncClassifier.R")
-class <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier/classifier.R"
-path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS"
-healthy <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC"
-butler <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/HBC_Butler"
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier"
+source("figure_scripts/classifier/FuncClassifier.R")
+class <- "figure_scripts/classifier/classifier.R"
+path <- "data/insert_size"
+healthy <- "hbc/insert_size"
+butler <- "butler/insert_size"
+outdir <- ""
 
 ### Import data (Starting with the 5Mb sizes)
-data_samples <- read.delim(file.path(path, "samples/sample_list.txt"))
-data_freq <- read.delim(file.path(path, "insert_size", "CHARM_LFS_fragment_freq.txt"))
-normal_freq <- read.delim(file.path(healthy, "insert_size", "TGL49_HBC_fragment_freq.txt"))
-butler_freq <- read.delim(file.path(butler, "insert_size", "HBC_Butler_fragment_freq.txt"), check.names = FALSE)
+data_samples <- read.delim("sample_list.txt"))
+data_freq <- read.delim(file.path(path, "CHARM_LFS_fragment_freq.txt"))
+normal_freq <- read.delim(file.path(healthy, "TGL49_HBC_fragment_freq.txt"))
+butler_freq <- read.delim(file.path(butler, "HBC_Butler_fragment_freq.txt"), check.names = FALSE)
 
-data_prop <- read.delim(file.path(path, "insert_size", "CHARM_LFS_proportions.txt"))
-normal_prop <- read.delim(file.path(healthy, "insert_size", "TGL49_HBC_proportions.txt"))
-butler_prop <- read.delim(file.path(butler, "insert_size", "HBC_Butler_proportions.txt"))
+data_prop <- read.delim(file.path(path, "CHARM_LFS_proportions.txt"))
+normal_prop <- read.delim(file.path(healthy, "TGL49_HBC_proportions.txt"))
+butler_prop <- read.delim(file.path(butler, "HBC_Butler_proportions.txt"))
 
 ### Remove failed samples
 exclude <- c("TGL49_0025_Cf_U_PE_321_WG", "TGL49_0035_Cf_U_PE_310_WG", "TGL49_0041_Cf_U_PE_317_WG", "TGL49_0209_Cf_U_PE_373_WG")
