@@ -4,10 +4,10 @@ library(psych)
 library(ComplexHeatmap)
 
 ### Set variables
-path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS"
-outdir <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/fragment_ratio"
+path <- ""
+outdir <- ""
 
-samples <- file.path(path, "samples/sample_list.txt")
+samples <- file.path("sample_list.txt")
 
 ### Import data
 samples <- read.delim(samples)
