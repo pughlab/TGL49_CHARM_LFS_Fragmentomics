@@ -8,10 +8,10 @@ library(pracma)
 ### Set paths
 sites <- c("CTCF", "TP53", "TP53_targets_TSS", "housekeeping_TSS")
 names <- c("CTCF", "TP53", "TP53 Targets TSS", "Housekeeping TSS")
-path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/griffin_all"
-samples <- "/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/CHARM_Project/LFS/samples/sample_list.txt"
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/fragment_nucleosome_TP53"
-healthy_path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/griffin_all"
+path <- "data/griffin"
+samples <- "sample_list.txt"
+outdir <- ""
+healthy_path <- "hbc/griffin"
 
 for (i in c(1:length(sites))) {
   ### Find paths
