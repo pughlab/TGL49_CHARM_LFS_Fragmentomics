@@ -4,13 +4,13 @@ library(psych)
 library(ComplexHeatmap)
 
 ### Set variables
-path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS"
-outdir <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/fragment_ratio"
-healthy <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC"
+path <- "data/fragment_ratio"
+outdir <- ""
+healthy <- "hbc/fragment_ratio"
 
-data_ratio <- file.path(path, "fragmentomics", "CHARM_LFS_ratio_5Mb.txt")
-samples <- file.path(path, "samples/sample_list.txt")
-data_healthy <- file.path(healthy, "fragmentomics", "TGL49_HBC_ratio_5Mb.txt")
+data_ratio <- file.path(path, "CHARM_LFS_ratio_5Mb.txt")
+samples <- "sample_list.txt"
+data_healthy <- file.path(healthy, "TGL49_HBC_ratio_5Mb.txt")
 
 ### Import data (Starting with the 5Mb ratios)
 data_ratio <- read.delim(data_ratio)
