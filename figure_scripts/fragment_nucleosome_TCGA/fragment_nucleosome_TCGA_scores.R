@@ -9,13 +9,13 @@ library(ggpubr)
 library(data.table)
 
 ### Set paths
-path <- "/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/CHARM_Project/LFS/griffin_all/TCGA"
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/fragment_nucleosome_TCGA"
-healthy_path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/griffin_all/TCGA"
+path <- "data/griffin/TCGA"
+outdir <- ""
+healthy_path <- "hbc/griffin/TCGA"
 
 ### Read in samples
-data_samples <- read.delim("/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/samples/sample_list.txt")
-healthy_samples <- read.delim("/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/sample_list.txt")
+data_samples <- read.delim("sample_list.txt")
+healthy_samples <- read.delim("hbc/sample_list.txt")
 
 ### Get list of files
 data_griffin <- list.files(path, "features", full.names = TRUE)
