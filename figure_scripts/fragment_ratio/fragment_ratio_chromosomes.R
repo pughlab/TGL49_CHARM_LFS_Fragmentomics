@@ -5,13 +5,13 @@ library(ComplexHeatmap)
 library(circlize)
 
 ### Set variables
-path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS"
-outdir <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/fragment_ratio"
-healthy <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC"
+path <- "data/fragment_ratio"
+outdir <- ""
+healthy <- "hbc/fragment_ratio"
 
 ### Import data (Starting with the 5Mb ratios)
-de_table <- read.delim(file.path(outdir, "fragment_ratio_differential.txt"))
-data_normal <- read.delim(file.path(healthy, "fragmentomics", "TGL49_HBC_ratio_5Mb.txt"))
+de_table <- read.delim("data/fragment_ratio_differential.txt")
+data_normal <- read.delim(file.path(healthy, "TGL49_HBC_ratio_5Mb.txt"))
 
 ### Calculate # and stats
 de_up <- de_table[de_table$padj_cohort < 0.05 & de_table$cohort > 0, ]
