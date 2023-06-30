@@ -4,15 +4,15 @@ library(tidyverse)
 library(pROC)
 
 ### Set variables
-source("/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier/FuncClassifier.R")
-class <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier_split/classifier.R"
-path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS"
-healthy <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC"
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier_split"
+source("figure_scripts/classifier_split/FuncClassifier.R")
+class <- "figure_scripts/classifier_split/classifier.R"
+path <- "data/fragment_ratio"
+healthy <- "hbc/fragment_ratio"
+outdir <- ""
 
 ### Import data (Starting with the 5Mb ratios)
-data_ratio <- read.delim(file.path(path, "fragmentomics", "CHARM_LFS_ratio_5Mb.txt"))
-normal_ratio <- read.delim(file.path(healthy, "fragmentomics", "TGL49_HBC_ratio_5Mb.txt"))
+data_ratio <- read.delim(file.path(path, "CHARM_LFS_ratio_5Mb.txt"))
+normal_ratio <- read.delim(file.path(healthy, "TGL49_HBC_ratio_5Mb.txt"))
 data_samples <- read.delim(file.path(outdir, "samples_split.txt"))
 
 ### Remove failed data_samples
