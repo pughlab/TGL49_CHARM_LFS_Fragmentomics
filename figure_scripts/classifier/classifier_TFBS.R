@@ -4,19 +4,19 @@ library(tidyverse)
 library(pROC)
 
 ### Set variables
-source("/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier/FuncClassifier.R")
-class <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier/classifier.R"
-path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/griffin_all/TFBS"
-healthy_path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/griffin_all/TFBS"
-butler_path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/HBC_Butler/griffin_all/TFBS"
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier"
+source("figure_scripts/classifier/FuncClassifier.R")
+class <- "figure_scripts/classifier/classifier.R"
+path <- "data/griffin/TFBS"
+healthy_path <- "hbc/griffin/TFBS"
+butler_path <- "butler/griffin/TFBS"
+outdir <- ""
 
 ### Import data 
 data_griffin <- list.files(path, "features", full.names = TRUE)
 normal_griffin <- list.files(healthy_path, "features", full.names = TRUE)
 butler_griffin <- list.files(butler_path, "features", full.names = TRUE)
 
-data_samples <- read.delim("/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/samples/sample_list.txt")
+data_samples <- read.delim("sample_list.txt")
 
 datalist <- lapply(data_griffin, function(x){read.delim(file = x)})
 data_griffin <- do.call(rbind, datalist)
