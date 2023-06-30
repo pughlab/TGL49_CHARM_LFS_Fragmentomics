@@ -11,18 +11,18 @@ library(lubridate)
 library(data.table)
 
 ### Set paths
-path <- "/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/CHARM_Project/LFS/insert_size"
-outdir <- "/Users/derekwong/Google Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/fragment_proportion"
-healthy_path <- "/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/insert_size"
-samples <- "/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/CHARM_Project/LFS/samples/sample_list.txt"
-source("//Users/derekwong/My Drive/Post-Doc/CHARM/LFS/Figures/TP53_griffin/geom_flat_violin.R")
+path <- "data/insert_size"
+outdir <- ""
+healthy_path <- "hbc/insert_size"
+samples <- "sample_list.txt"
+source("geom_flat_violin.R")
 
 ### Find files
 proportion <- read.delim(list.files(path, "proportion", full.names = TRUE))
 normal_prop <- read.delim(list.files(healthy_path, "proportion", full.names = TRUE))
-groups <- read.delim(list.files("/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/CHARM_Project/LFS/read_group", ".txt", full.names = TRUE))
-groups_n <- read.delim(list.files("/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/read_group", ".txt", full.names = TRUE))
-clusters <- read.delim("/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/fragment_proportion/cluster_density.txt")
+groups <- read.delim(list.files("data/read_group", ".txt", full.names = TRUE))
+groups_n <- read.delim(list.files("hbc/read_group", ".txt", full.names = TRUE))
+clusters <- read.delim("data/cluster_density.txt")
 data_samples <- read.delim(samples)
 
 ### Remove failed and unknown samples and format 
