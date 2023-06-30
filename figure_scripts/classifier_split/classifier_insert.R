@@ -4,18 +4,18 @@ library(tidyverse)
 library(pROC)
 
 ### Set variables
-source("/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier/FuncClassifier.R")
-class <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier_split/classifier.R"
-path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS"
-healthy <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC"
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier_split"
+source("figure_scripts/classifier_split/FuncClassifier.R")
+class <- "figure_scripts/classifier_split/classifier.R"
+path <- "data/insert_size"
+healthy <- "hbc/insert_size"
+outdir <- ""
 
 ### Import data (Starting with the 5Mb sizes)
-data_freq <- read.delim(file.path(path, "insert_size", "CHARM_LFS_fragment_freq.txt"))
-normal_freq <- read.delim(file.path(healthy, "insert_size", "TGL49_HBC_fragment_freq.txt"))
+data_freq <- read.delim(file.path(path, "CHARM_LFS_fragment_freq.txt"))
+normal_freq <- read.delim(file.path(healthy, "TGL49_HBC_fragment_freq.txt"))
 
-data_prop <- read.delim(file.path(path, "insert_size", "CHARM_LFS_proportions.txt"))
-normal_prop <- read.delim(file.path(healthy, "insert_size", "TGL49_HBC_proportions.txt"))
+data_prop <- read.delim(file.path(path, "CHARM_LFS_proportions.txt"))
+normal_prop <- read.delim(file.path(healthy, "TGL49_HBC_proportions.txt"))
 
 data_samples <- read.delim(file.path(outdir, "samples_split.txt"))
 
