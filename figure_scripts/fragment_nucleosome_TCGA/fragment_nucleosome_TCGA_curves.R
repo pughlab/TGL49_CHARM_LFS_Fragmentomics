@@ -10,10 +10,10 @@ sites <- c("PRAD", "BRCA", "BLCA", "LUAD")
 names <- c("Prostate Cancer", "Breast Cancer", "Bladder Cancer", "Lung Cancer")
 lists <- c("prostate", "breast", "bladder", "lung")
 
-path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/griffin_all/TCGA"
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/fragment_nucleosome_TCGA"
-healthy_path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/griffin_all/TCGA"
-samples_path <- "/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/CHARM_Project/LFS/samples/sample_list.txt"
+path <- "data/griffin/TCGA"
+outdir <- ""
+healthy_path <- "hbc/griffin/TCGA"
+samples_path <- "sample_list.txt"
 
 for (i in c(1:length(sites))) {
   ### Set variables
