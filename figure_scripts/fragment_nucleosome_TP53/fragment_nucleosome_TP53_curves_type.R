@@ -9,9 +9,9 @@ library(pracma)
 sites <- c("CTCF", "TP53", "TP53_targets_TSS", "housekeeping_TSS")
 names <- c("CTCF", "TP53", "TP53 Targets TSS", "Housekeeping TSS")
 
-path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/griffin_all"
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/fragment_nucleosome_TP53"
-healthy_path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/griffin_all"
+path <- "data/griffin"
+outdir <- ""
+healthy_path <- "hbc/griffin"
 
 for (i in c(1:length(sites))) {
   ### Find paths
@@ -27,7 +27,7 @@ for (i in c(1:length(sites))) {
   ### Import data 
   data_griffin <- read.delim(data_griffin)
   data_normal <- read.delim(data_normal)
-  data_samples <- read.delim("/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/samples/sample_list.txt")
+  data_samples <- read.delim("sample_list.txt")
   
   ### Apply Savitzky-Golay filter
   distance <- data_griffin$distance
