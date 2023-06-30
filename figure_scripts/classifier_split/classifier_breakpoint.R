@@ -4,11 +4,11 @@ library(tidyverse)
 library(pROC)
 
 ### Set variables
-source("/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier_split/FuncClassifier.R")
-class <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier_split/classifier.R"
-path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/breakpoint"
-healthy_path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/breakpoint"
-outdir <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier_split"
+source("figure_scripts/classifier_split/FuncClassifier.R")
+class <- "figure_scripts/classifier_split/classifier.R"
+path <- "data/breakpoint"
+healthy_path <- "hbc/breakpoint"
+outdir <- ""
 
 ### Import data 
 data <- read.delim(list.files(path, "CHARM_LFS_genome_breakpoint_ratio.txt", full.names = TRUE))
