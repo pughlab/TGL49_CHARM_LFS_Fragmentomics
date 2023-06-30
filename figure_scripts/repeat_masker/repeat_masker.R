@@ -4,10 +4,10 @@ library(data.table)
 library(ggplot2)
 
 ### Set paths
-path <- "/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/CHARM_Project/LFS/repeat_masker"
-outdir <- "/Users/derekwong/Library/CloudStorage/GoogleDrive-derekwong90@gmail.com/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/repeat_masker"
-healthy_path <- "/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/repeat_masker"
-samples <- "/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/CHARM_Project/LFS/samples/sample_list.txt"
+path <- "data/repeat_masker"
+outdir <- ""
+healthy_path <- "hbc/repeat_masker"
+samples <- "sample_list.txt"
 
 ## Import data
 data_count <- read.delim(list.files(path, "count", full.names = TRUE))
