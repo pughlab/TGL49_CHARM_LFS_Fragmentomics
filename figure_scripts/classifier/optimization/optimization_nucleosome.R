@@ -4,16 +4,16 @@ library(tidyverse)
 library(pROC)
 
 ### Set variables
-path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/nucleosome_peaks"
-healthy_path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/Healthy_control_cohorts/CHARM_HBC/nucleosome_peaks"
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier/optimization"
+path <- "data/nucleosome_peaks"
+healthy_path <- "hbc/nucleosome_peaks"
+outdir <- ""
 title <- "nucleosome"
 title2 <- "Nuc Dist"
 
 ### Import data 
 data <- read.delim(list.files(path, "CHARM_LFS_genome_peak_distances.txt", full.names = TRUE))
 normal <- read.delim(list.files(healthy_path, "CHARM_HBC_genome_peak_distances.txt", full.names = TRUE))
-data_samples <- read.delim("/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS/samples/sample_list.txt")
+data_samples <- read.delim("sample_list.txt")
 
 ### Remove failed data_samples
 exclude <- c("TGL49_0025_Cf_U_PE_321_WG", "TGL49_0035_Cf_U_PE_310_WG", "TGL49_0041_Cf_U_PE_317_WG", "TGL49_0209_Cf_U_PE_373_WG")
@@ -45,4 +45,4 @@ normal_sum <- normal_sum/rowSums(normal_sum)
 normal <- normal_sum
 
 ### Run classifiers
-source("/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/classifier/optimization/runner.R")
+source("figure_scripts/classifier/optimization/runner.R")
