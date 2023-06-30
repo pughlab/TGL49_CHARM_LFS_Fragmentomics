@@ -5,14 +5,14 @@ library(matrixStats)
 library(scales)
 
 ### Set variables
-path <- "/Users/derekwong/OneDrive - UHN/Post-Doc/CHARM_Project/LFS"
-outdir <- "/Users/derekwong/My Drive/Post-Doc/CHARM/LFS/LFS_fragment/figures/fragment_ratio"
-gistic <- "/Users/derekwong/Library/CloudStorage/OneDrive-UHN/Post-Doc/External_data/TCGA_GISTIC/TCGA_merged_GISTIC_hg38.txt"
+path <- "data/fragment_ratio"
+outdir <- ""
+gistic <- "data/TCGA_merged_GISTIC_hg38.txt"
 
 ### Import data (Starting with the 5Mb ratios)
 gistic <- read.delim(gistic)
-de_table <- read.delim(file.path(outdir, "fragment_ratio_differential.txt"))
-data_ratio <- read.delim(file.path(path, "fragmentomics", "CHARM_LFS_ratio_5Mb.txt"))
+de_table <- read.delim("data/fragment_ratio_differential.txt"))
+data_ratio <- read.delim(file.path(path, "CHARM_LFS_ratio_5Mb.txt"))
 
 ### Set chromosomes
 data_chr <- data_ratio[, c("seqnames", "arm", "start", "end")]
